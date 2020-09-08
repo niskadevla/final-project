@@ -1,0 +1,18 @@
+$bgColor: #cc99ff;
+
+.header {
+  padding: 1rem 0;
+  background-color: $bgColor;
+
+  &-inner {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-logo img {
+    width: 3rem;
+    height: auto;
+    border-radius: 50%;
+  }
+}
+
