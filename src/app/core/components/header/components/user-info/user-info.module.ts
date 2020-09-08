@@ -8,11 +8,11 @@ import {UserInfoComponent} from './user-info.component';
   declarations: [
     UserInfoComponent
   ],
-  exports: [
-    UserInfoComponent
-  ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    UserInfoComponent
   ]
 })
 export class UserInfoModule { }
