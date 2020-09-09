@@ -12,7 +12,6 @@ import {HeaderModule} from './core/components/header/header.module';
     BrowserModule,
     HeaderModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
