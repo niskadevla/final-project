@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import {HeaderModule} from './core/components/header/header.module';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthModule} from './features/auth/auth.module';
+
 
 @NgModule({
   declarations: [
@@ -12,6 +14,7 @@ import {AuthModule} from './features/auth/auth.module';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HeaderModule,
     AuthModule,
     AppRoutingModule
