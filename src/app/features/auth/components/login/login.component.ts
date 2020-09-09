@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent {
 
-  onSubmit(form: NgForm): void {
-    console.dir(form);
+  onSubmit(loginForm: NgForm): void {
+    console.dir(loginForm);
   }
 }
