@@ -19,7 +19,10 @@ export class RegistrationComponent {
                 /^[A-Z]{1}[a-z]+[A-Z]{1}[a-z]+$/
             ])
         ]),
-        email: new FormControl('', [Validators.required]),
+        email: new FormControl('', [
+            Validators.required,
+            Validators.email
+        ]),
         password: new FormControl('', [Validators.required, Validators.minLength(5)])
     });
 

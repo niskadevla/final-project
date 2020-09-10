@@ -31,9 +31,10 @@
             >
             <div id="emailHelp" class="text-danger" *ngIf="form.get('email').invalid && form.get('email').touched">
                 <span *ngIf="form.get('email').errors?.required">Email is required</span>
-                <span *ngIf="form.get('email').errors?.required">Email supports only (.com, .net, .org, .co, .us) domains</span>
-                <span *ngIf="form.get('email').errors?.required">Only 5 symbols after @ allowed</span>
-                <span *ngIf="form.get('email').errors?.required">No more than 3 dotts before @ allowed</span>
+                <span *ngIf="form.get('email').errors?.email">Email is incorrect</span>
+                <span *ngIf="form.get('email').errors?.forbiddenEmail">Email supports only (.com, .net, .org, .co, .us) domains</span>
+                <span *ngIf="form.get('email').errors?.forbiddenEmail">Only 5 symbols after @ allowed</span>
+                <span *ngIf="form.get('email').errors?.forbiddenEmail">No more than 3 dotts before @ allowed</span>
             </div>
         </div>
         <div class="mb-3">
