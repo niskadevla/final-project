@@ -11,9 +11,8 @@ export function allowedIfOnlyOneValidator(arrRe): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
         const value = control.value;
         let forbidden = true;
-        let cases = arrRe.map(nameRe => nameRe.test(value));
-
-        cases = cases.filter(el => el);
+        const cases = arrRe.map(nameRe => nameRe.test(value))
+                           .filter(el => el);
 
         if (cases?.length === 1) {
             forbidden = false;
