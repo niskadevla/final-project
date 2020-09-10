@@ -1,23 +1,61 @@
 <section class="auth-page">
-  <h3 class="auth-page-title">Registration page</h3>
-  <form>
-    <div class="mb-3">
-      <label for="inputUsername1" class="form-label">Username</label>
-      <input type="text" class="form-control" id="inputUsername1" aria-describedby="userHelp">
-      <div id="userHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-      <label for="inputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-      <label for="inputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" id="inputPassword1" aria-describedby="passwordHelp">
-      <div id="passwordHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-      <button type="submit" class="btn btn-primary" disabled>Create account</button>
-    </div>
-  </form>
+    <h3 class="auth-page-title">Registration page</h3>
+    <form [formGroup]="form">
+        <div class="mb-3">
+            <label for="inputUsername1" class="form-label">Username</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="inputUsername1"
+                    aria-describedby="userHelp"
+                    formControlName="name"
+                    [class.is-invalid]="form.get('name').invalid && form.get('name').touched"
+            >
+            <div id="userHelp" class="text-danger" *ngIf="form.get('name').invalid && form.get('name').touched">
+                <span *ngIf="userName.errors?.required">User name is required;</span>
+                <span *ngIf="form.get('name').errors?.forbiddenCase">User should contain two words;</span>
+                <span *ngIf="form.get('name').errors?.forbiddenCase">User name - kebab-case, camelCase, SpaceCase - allowed;</span>
+                <span *ngIf="form.get('name').errors?.minlength?.requiredLength">User name should be at least 8 characters length;</span>
+                <span *ngIf="form.get('name').errors?.forbiddenCase">User name - no special symbols or numbers allowed</span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="inputEmail1" class="form-label">Email address</label>
+            <input
+                    type="email"
+                    class="form-control"
+                    id="inputEmail1"
+                    aria-describedby="emailHelp"
+                    formControlName="email"
+                    [class.is-invalid]="form.get('email').invalid && form.get('email').touched"
+            >
+            <div id="emailHelp" class="text-danger" *ngIf="form.get('email').invalid && form.get('email').touched">
+                <span *ngIf="form.get('email').errors?.required">Email is required</span>
+                <span *ngIf="form.get('email').errors?.required">Email supports only (.com, .net, .org, .co, .us) domains</span>
+                <span *ngIf="form.get('email').errors?.required">Only 5 symbols after @ allowed</span>
+                <span *ngIf="form.get('email').errors?.required">No more than 3 dotts before @ allowed</span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="inputPassword1" class="form-label">Password</label>
+            <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword1"
+                    aria-describedby="passwordHelp"
+                    formControlName="password"
+            >
+            <div id="passwordHelp" class="text-danger" *ngIf="form.get('password').invalid && form.get('password').touched">
+                <span *ngIf="form.get('password').errors?.required">password is required</span>
+                <span *ngIf="form.get('password').errors?.minlength?.requiredLength">password - should be at least 5 characters length</span>
+                <span *ngIf="form.get('password').errors?.required">
+                    password should contain: at least one uppercase letter, one number, one special symbol. $ % . & ! - symbols allowed
+                </span>
+                <span *ngIf="form.get('password').errors?.required">password - Should not contain parts of a user name or email</span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Create account</button>
+        </div>
+    </form>
 </section>
