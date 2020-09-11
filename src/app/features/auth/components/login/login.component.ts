@@ -1,14 +1,28 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  onSubmit(loginForm: NgForm): void {
-    console.dir(loginForm);
-  }
+    form: FormGroup;
+
+    constructor(private fb: FormBuilder) {}
+
+    ngOnInit(): void {
+        this.form = this.fb.group(
+            {
+                email: this.fb.control('', [Validators.required]),
+                password: this.fb.control('', [Validators.required])
+            }
+        );
+    }
+
+    getField(fieldName: string): AbstractControl {
+        return this.form.get(fieldName);
+    }
+
 }
