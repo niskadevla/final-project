@@ -8,6 +8,10 @@ export function allowedPasswordValidator(nameRe: RegExp): ValidatorFn {
 }
 
 export const identityRevealedValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+    if (control.get('name').pristine || control.get('email').pristine) {
+        return null;
+    }
+
     const name = control.get('name')?.value;
     const email = control.get('email')?.value;
     const password = control.get('password')?.value;
