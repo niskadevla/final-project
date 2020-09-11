@@ -1,12 +1,5 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-// export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
-//     return (control: AbstractControl): {[key: string]: any} | null => {
-//         const forbidden = nameRe.test(control.value);
-//         return forbidden ? {forbiddenName: {value: control.value}} : null;
-//     };
-// }
-
 export function allowedIfOnlyOneValidator(arrRe): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
         const value = control.value;
@@ -22,10 +15,10 @@ export function allowedIfOnlyOneValidator(arrRe): ValidatorFn {
     };
 }
 
-export function allowedEmailValidator(nameRe: RegExp): ValidatorFn {
+export function allowedRegExpValidator(nameRe: RegExp): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
-        const forbidden = nameRe.test(control.value);
-        return forbidden ? {forbiddenEmail: {value: control.value}} : null;
+        const forbidden = !nameRe.test(control.value);
+        return forbidden ? {forbiddenValue: {value: control.value}} : null;
     };
 }
 

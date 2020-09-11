@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { allowedIfOnlyOneValidator } from '../../validators/user-name.validator';
+import { allowedIfOnlyOneValidator, allowedRegExpValidator } from '../../validators/user-name.validator';
 
 @Component({
     selector: 'app-registration',
@@ -21,9 +21,14 @@ export class RegistrationComponent {
         ]),
         email: new FormControl('', [
             Validators.required,
-            Validators.email
+            Validators.email,
+            allowedRegExpValidator(/^(\w+\.?){0,3}@(\w){0,5}(\.com|\.net|\.org|\.co|\.us)$/)
         ]),
-        password: new FormControl('', [Validators.required, Validators.minLength(5)])
+        password: new FormControl('', [
+            Validators.required,
+            Validators.minLength(5),
+            allowedRegExpValidator(/\w(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/)
+        ])
     });
 
     get userName(): AbstractControl {

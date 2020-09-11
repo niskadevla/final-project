@@ -30,11 +30,11 @@
                     [class.is-invalid]="form.get('email').invalid && form.get('email').touched"
             >
             <div id="emailHelp" class="text-danger" *ngIf="form.get('email').invalid && form.get('email').touched">
-                <span *ngIf="form.get('email').errors?.required">Email is required</span>
-                <span *ngIf="form.get('email').errors?.email">Email is incorrect</span>
-                <span *ngIf="form.get('email').errors?.forbiddenEmail">Email supports only (.com, .net, .org, .co, .us) domains</span>
-                <span *ngIf="form.get('email').errors?.forbiddenEmail">Only 5 symbols after @ allowed</span>
-                <span *ngIf="form.get('email').errors?.forbiddenEmail">No more than 3 dotts before @ allowed</span>
+                <span *ngIf="form.get('email').errors?.required">Email is required;</span>
+                <span *ngIf="form.get('email').errors?.email">Email is incorrect;</span>
+                <span *ngIf="form.get('email').errors?.forbiddenValue">Email supports only (.com, .net, .org, .co, .us) domains;</span>
+                <span *ngIf="form.get('email').errors?.forbiddenValue">Only 5 symbols after @ allowed;</span>
+                <span *ngIf="form.get('email').errors?.forbiddenValue">No more than 3 dotts before @ allowed</span>
             </div>
         </div>
         <div class="mb-3">
@@ -47,12 +47,12 @@
                     formControlName="password"
             >
             <div id="passwordHelp" class="text-danger" *ngIf="form.get('password').invalid && form.get('password').touched">
-                <span *ngIf="form.get('password').errors?.required">password is required</span>
-                <span *ngIf="form.get('password').errors?.minlength?.requiredLength">password - should be at least 5 characters length</span>
-                <span *ngIf="form.get('password').errors?.required">
-                    password should contain: at least one uppercase letter, one number, one special symbol. $ % . & ! - symbols allowed
+                <span *ngIf="form.get('password').errors?.required">password is required;</span>
+                <span *ngIf="form.get('password').errors?.minlength">password - should be at least 5 characters length;</span>
+                <span *ngIf="form.get('password').errors?.forbiddenValue">
+                    password should contain: at least one uppercase letter, one number, one special symbol. $ % . & ! - symbols allowed;
                 </span>
-                <span *ngIf="form.get('password').errors?.required">password - Should not contain parts of a user name or email</span>
+                <span *ngIf="form.get('password').errors?.required">password - Should not contain parts of a user name or email;</span>
             </div>
         </div>
         <div class="mb-3">
