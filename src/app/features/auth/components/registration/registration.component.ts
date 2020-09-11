@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { allowedIfOnlyOneValidator, allowedRegExpValidator } from '../../validators/user-name.validator';
+import { allowedIfOnlyOneValidator } from '../../validators/user-name.validator';
+import { allowedEmailValidator } from '../../validators/email.validator';
+import { allowedPasswordValidator } from '../../validators/password.validator';
 
 @Component({
     selector: 'app-registration',
@@ -22,12 +24,12 @@ export class RegistrationComponent {
         email: new FormControl('', [
             Validators.required,
             Validators.email,
-            allowedRegExpValidator(/^(\w+\.?){0,3}@(\w){0,5}(\.com|\.net|\.org|\.co|\.us)$/)
+            allowedEmailValidator(/^(\w+\.?){0,3}@(\w){0,5}(\.com|\.net|\.org|\.co|\.us)$/)
         ]),
         password: new FormControl('', [
             Validators.required,
             Validators.minLength(5),
-            allowedRegExpValidator(/\w(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/)
+            allowedPasswordValidator(/\w(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/)
         ])
     });
 
