@@ -34,7 +34,7 @@
                 <span *ngIf="form.get('email').errors?.email">Email is incorrect;</span>
                 <span *ngIf="form.get('email').errors?.forbiddenValue">Email supports only (.com, .net, .org, .co, .us) domains;</span>
                 <span *ngIf="form.get('email').errors?.forbiddenValue">Only 5 symbols after @ allowed;</span>
-                <span *ngIf="form.get('email').errors?.forbiddenValue">No more than 3 dotts before @ allowed</span>
+                <span *ngIf="form.get('email').errors?.forbiddenValue">No more than 3 dotts before @ allowed;</span>
             </div>
         </div>
         <div class="mb-3">
@@ -46,13 +46,16 @@
                     aria-describedby="passwordHelp"
                     formControlName="password"
             >
-            <div id="passwordHelp" class="text-danger" *ngIf="form.get('password').invalid && form.get('password').touched">
+            <div
+                    id="passwordHelp"
+                    class="text-danger"
+                    *ngIf="(form.errors?.identityRevealed && form.get('password').touched) || (form.get('password').invalid && form.get('password').touched)">
                 <span *ngIf="form.get('password').errors?.required">password is required;</span>
                 <span *ngIf="form.get('password').errors?.minlength">password - should be at least 5 characters length;</span>
                 <span *ngIf="form.get('password').errors?.forbiddenValue">
                     password should contain: at least one uppercase letter, one number, one special symbol. $ % . & ! - symbols allowed;
                 </span>
-                <span *ngIf="form.get('password').errors?.required">password - Should not contain parts of a user name or email;</span>
+                <span *ngIf="form.errors?.identityRevealed">password - Should not contain parts of a user name or email;</span>
             </div>
         </div>
         <div class="mb-3">

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { allowedIfOnlyOneValidator } from '../../validators/user-name.validator';
 import { allowedEmailValidator } from '../../validators/email.validator';
-import { allowedPasswordValidator } from '../../validators/password.validator';
+import { allowedPasswordValidator, identityRevealedValidator } from '../../validators/password.validator';
 
 @Component({
     selector: 'app-registration',
@@ -31,7 +31,7 @@ export class RegistrationComponent {
             Validators.minLength(5),
             allowedPasswordValidator(/\w(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/)
         ])
-    });
+    }, {validators: identityRevealedValidator});
 
     get userName(): AbstractControl {
         return this.form.get('name');
