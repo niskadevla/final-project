@@ -1,8 +1,6 @@
-interface AppRotes  {
-    LOGIN: {routerPath: string};
-    REGISTRATION: {routerPath: string};
-}
-export const routes: AppRotes = {
+import { IAppRotes } from './route.model';
+
+export const routes: IAppRotes = {
     LOGIN: { routerPath: 'login' },
     REGISTRATION: { routerPath: 'registration' }
 };

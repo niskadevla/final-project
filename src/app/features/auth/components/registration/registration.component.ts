@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { allowedNameValidator } from '../../validators/user-name.validator';
 import { allowedEmailValidator } from '../../validators/email.validator';
 import { allowedPasswordValidator, identityRevealedValidator } from '../../validators/password.validator';
-import { allowedEmail, allowedPassword, camelCase, kebabCase, spaceCase } from '../../../../shared/utils/constants';
+import { allowedEmailRegexp, allowedPasswordRegexp, camelCaseRegexp, kebabCaseRegexp, spaceCaseRegexp } from '../../../../shared/utils/constants';
 
 @Component({
     selector: 'app-registration',
@@ -26,20 +26,20 @@ export class RegistrationComponent implements OnInit {
                 Validators.required,
                 Validators.minLength(8),
                 allowedNameValidator([
-                    camelCase,
-                    kebabCase,
-                    spaceCase
+                    camelCaseRegexp,
+                    kebabCaseRegexp,
+                    spaceCaseRegexp
                 ])
             ]),
             email: this.fb.control('', [
                 Validators.required,
                 Validators.email,
-                allowedEmailValidator(allowedEmail)
+                allowedEmailValidator(allowedEmailRegexp)
             ]),
             password: this.fb.control('', [
                 Validators.required,
                 Validators.minLength(5),
-                allowedPasswordValidator(allowedPassword)
+                allowedPasswordValidator(allowedPasswordRegexp)
             ])
         }, { validators: identityRevealedValidator });
     }
