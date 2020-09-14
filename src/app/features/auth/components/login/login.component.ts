@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Message } from '../../../../shared/models/message.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { UsersService } from '../../../../shared/services/users.service';
+import { AuthService } from '../../../../shared/services/auth.service';
+import { HEROES } from '../../../../shared/utils/constants';
 
 @Component({
   selector: 'app-login',
@@ -14,15 +17,17 @@ export class LoginComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
                 private router: Router,
-                private route: ActivatedRoute) {}
+                private route: ActivatedRoute,
+                private usersService: UsersService,
+                private authService: AuthService) {}
 
     ngOnInit(): void {
         this.message = new Message('', 'danger');
 
         this.form = this.fb.group(
             {
-                email: this.fb.control('', [Validators.required]),
-                password: this.fb.control('', [Validators.required])
+                email: this.fb.control('', [Validators.required, Validators.email]),
+                password: this.fb.control('', [Validators.required, Validators.minLength(5)])
             }
         );
 
@@ -54,6 +59,30 @@ export class LoginComponent implements OnInit {
         this.message = message;
 
         window.setTimeout(() => this.message.text = '', 5000);
+    }
+
+    onSubmit(): void {
+        const data = this.form.value;
+        const user = this.usersService.getUserByEmail(data.email);
+
+        if (user) {
+            if (user.password === data.password) {
+                this.message.text = '';
+                window.localStorage.setItem('user', JSON.stringify(user));
+                this.authService.login();
+                this.router.navigate([HEROES]);
+            } else {
+                this.showMessage({
+                    text: 'Password is incorrect',
+                    type: 'danger'
+                });
+            }
+        } else {
+            this.showMessage({
+                text: 'User didn\'t find',
+                type: 'danger'
+            });
+        }
     }
 
 }

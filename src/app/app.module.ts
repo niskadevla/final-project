@@ -6,10 +6,13 @@ import { AppComponent } from './app.component';
 import { HeaderModule } from './core/components/header/header.module';
 import { AppRoutingModule } from './app-routing.module';
 import { UsersService } from './shared/services/users.service';
+import { AuthService } from './shared/services/auth.service';
+import { HeroesComponent } from './features/heroes/heroes.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        HeroesComponent
     ],
     imports: [
         BrowserModule,
@@ -18,7 +21,8 @@ import { UsersService } from './shared/services/users.service';
         AppRoutingModule
     ],
     providers: [
-        UsersService
+        UsersService,
+        AuthService
     ],
     bootstrap: [ AppComponent ]
 })
