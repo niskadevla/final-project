@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { allowedNameValidator } from '../../validators/user-name.validator';
-import { allowedEmailValidator, forbiddenEmails } from '../../validators/email.validator';
+import { allowedEmailValidator } from '../../validators/email.validator';
 import { allowedPasswordValidator, identityRevealedValidator } from '../../validators/password.validator';
-import { UsersService } from '../../../../shared/services/users.service';
-import { LOGIN } from '../../../../shared/utils/constants';
-import { Router } from '@angular/router';
+import { allowedEmailRegexp, allowedPasswordRegexp, camelCaseRegexp, kebabCaseRegexp, spaceCaseRegexp } from '../../../../shared/utils/constants';
 
 @Component({
     selector: 'app-registration',
@@ -16,47 +14,42 @@ export class RegistrationComponent implements OnInit {
 
     form: FormGroup;
 
-    constructor(private fb: FormBuilder,
-                private usersService: UsersService,
-                private router: Router) {
-    }
+    constructor(private fb: FormBuilder) {}
 
     ngOnInit(): void {
+        this.initForm();
+    }
+
+    initForm(): void {
         this.form = this.fb.group({
             name: this.fb.control('', [
                 Validators.required,
                 Validators.minLength(8),
                 allowedNameValidator([
-                    /^[a-z]+[A-Z]{1}[a-z]+$/,
-                    /^[a-z]+-{1}[a-z]+$/,
-                    /^[A-Z]{1}[a-z]+[A-Z]{1}[a-z]+$/
+                    camelCaseRegexp,
+                    kebabCaseRegexp,
+                    spaceCaseRegexp
                 ])
             ]),
             email: this.fb.control('', [
                 Validators.required,
                 Validators.email,
-                allowedEmailValidator(/^(\w+\.?){0,3}@(\w){0,5}(\.com|\.net|\.org|\.co|\.us)$/),
-                forbiddenEmails.call(this)
+                allowedEmailValidator(allowedEmailRegexp)
             ]),
             password: this.fb.control('', [
                 Validators.required,
                 Validators.minLength(5),
-                allowedPasswordValidator(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/)
+                allowedPasswordValidator(allowedPasswordRegexp)
             ])
         }, { validators: identityRevealedValidator });
     }
 
-    getFieldErrors(fieldName: string): ValidationErrors {
-        return this.form.get(fieldName).errors;
-    }
-
-    getField(fieldName: string): AbstractControl {
+    public getField(fieldName: string): AbstractControl {
         return this.form.get(fieldName);
     }
 
-    onSubmit(): void {
-        const data = this.form.value;
-
+    public isFieldHasError(fieldName: string, error: string): boolean {
+        return this.form.get(fieldName).hasError(error);
         data.id = Date.now();
 
         if (this.form.valid) {
@@ -69,5 +62,4 @@ export class RegistrationComponent implements OnInit {
             });
         }
     }
-
 }

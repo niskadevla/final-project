@@ -10,11 +10,13 @@
                    formControlName="name"
                    [class.has-error]="getField('name').invalid && getField('name').touched">
             <div id="userHelp" class="text-danger" *ngIf="getField('name').invalid && getField('name').touched">
-                <span *ngIf="getFieldErrors('name')?.required">User name is required;</span>
-                <span *ngIf="getFieldErrors('name')?.forbiddenCase">User should contain two words;</span>
-                <span *ngIf="getFieldErrors('name')?.forbiddenCase">User name - kebab-case, camelCase, SpaceCase - allowed;</span>
-                <span *ngIf="getFieldErrors('name')?.minlength?.requiredLength">User name should be at least 8 characters length;</span>
-                <span *ngIf="getFieldErrors('name')?.forbiddenCase">User name - no special symbols or numbers allowed</span>
+                <span *ngIf="isFieldHasError('name', 'required')">User name is required;</span>
+                <span *ngIf="isFieldHasError('name', 'forbiddenCase')">User should contain two words;</span>
+                <span *ngIf="isFieldHasError('name', 'forbiddenCase')">User name - kebab-case, camelCase, SpaceCase - allowed;</span>
+                <span *ngIf="isFieldHasError('name', 'minlength')">
+                    User name should be at least {{ getField('name')?.errors?.minlength?.requiredLength}} characters length;
+                </span>
+                <span *ngIf="isFieldHasError('name', 'forbiddenCase')">User name - no special symbols or numbers allowed</span>
             </div>
         </div>
         <div class="mb-3">
@@ -25,15 +27,14 @@
                    aria-describedby="emailHelp"
                    formControlName="email"
                    [class.has-error]="getField('email').invalid && getField('email').touched">
-            <div id="emailHelp" class="text-danger" *ngIf="getField('email').invalid && getField('email').touched">
-                <span *ngIf="getFieldErrors('email')?.required">Email is required;</span>
-                <span *ngIf="getFieldErrors('email')?.email">Email is incorrect;</span>
-                <span *ngIf="getFieldErrors('email')?.forbiddenValue">
+            <div id="emailHelp" class="text-danger" *ngIf="form.get('email').invalid && form.get('email').touched">
+                <span *ngIf="isFieldHasError('email', 'required')">Email is required;</span>
+                <span *ngIf="isFieldHasError('email', 'email')">Email is incorrect;</span>
+                <span *ngIf="isFieldHasError('email', 'forbiddenValue')">
                     Email supports only (.com, .net, .org, .co, .us) domains;
                     Only 5 symbols after @ allowed;
                     No more than 3 dotts before @ allowed;
                 </span>
-                <span *ngIf="getFieldErrors('email')?.forbiddenEmail">Email already exists</span>
             </div>
         </div>
         <div class="mb-3">
@@ -48,9 +49,11 @@
                  class="text-danger"
                  *ngIf="(form.errors?.identityRevealed && getField('password').touched)
                             || (getField('password').invalid && getField('password').touched)">
-                <span *ngIf="getFieldErrors('password')?.required">password is required;</span>
-                <span *ngIf="getFieldErrors('password')?.minlength">should be at least 5 characters length;</span>
-                <span *ngIf="getFieldErrors('password')?.forbiddenValue">
+                <span *ngIf="isFieldHasError('password', 'required')">password is required;</span>
+                <span *ngIf="isFieldHasError('password', 'minlength')">
+                    should be at least {{ getField('password')?.errors?.minlength?.requiredLength}} characters length;
+                </span>
+                <span *ngIf="isFieldHasError('password', 'forbiddenValue')">
                     should contain: at least one uppercase letter, one number, one special symbol. $ % . & ! - symbols allowed;
                 </span>
                 <span *ngIf="form.errors?.identityRevealed">should not contain parts of a user name or email;</span>
