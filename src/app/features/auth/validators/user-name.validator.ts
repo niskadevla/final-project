@@ -1,6 +1,6 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export function allowedNameValidator(arrRe): ValidatorFn {
+export function allowedNameValidator(arrRe: RegExp[]): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
         const value = control.value;
         let forbidden = true;

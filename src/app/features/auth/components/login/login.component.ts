@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { routes } from '../../../../core/routes/app-routes';
 
 @Component({
   selector: 'app-login',
@@ -9,20 +10,25 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 export class LoginComponent implements OnInit {
 
     form: FormGroup;
+    route = '/' + routes.REGISTRATION.routerPath;
 
     constructor(private fb: FormBuilder) {}
 
     ngOnInit(): void {
+        this.initForm();
+    }
+
+    getField(fieldName: string): AbstractControl {
+        return this.form.get(fieldName);
+    }
+
+    initForm(): void {
         this.form = this.fb.group(
             {
                 email: this.fb.control('', [Validators.required]),
                 password: this.fb.control('', [Validators.required])
             }
         );
-    }
-
-    getField(fieldName: string): AbstractControl {
-        return this.form.get(fieldName);
     }
 
 }
