@@ -1,7 +1,7 @@
-export interface UserSession {
+export interface IUserToken {
     name: string;
     email: string;
-    id: number;
+    id?: number;
     token: number;
     timeStamp: number;
 }

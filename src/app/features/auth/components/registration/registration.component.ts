@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { allowedNameValidator } from '../../validators/user-name.validator';
-import { allowedEmailValidator } from '../../validators/email.validator';
+import { allowedEmailValidator, forbiddenEmails } from '../../validators/email.validator';
 import { allowedPasswordValidator, identityRevealedValidator } from '../../validators/password.validator';
+import { UsersService } from '../../../../shared/services/users.service';
 import { allowedEmailRegexp, allowedPasswordRegexp, camelCaseRegexp, kebabCaseRegexp, spaceCaseRegexp } from '../../../../shared/utils/constants';
+import { routes } from '../../../../core/routes/app-routes';
+import { uniqId } from '../../../../shared/utils/uniqId';
 
 @Component({
     selector: 'app-registration',
@@ -14,7 +19,9 @@ export class RegistrationComponent implements OnInit {
 
     form: FormGroup;
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder,
+                private usersService: UsersService,
+                private router: Router) {}
 
     ngOnInit(): void {
         this.initForm();
@@ -34,7 +41,8 @@ export class RegistrationComponent implements OnInit {
             email: this.fb.control('', [
                 Validators.required,
                 Validators.email,
-                allowedEmailValidator(allowedEmailRegexp)
+                allowedEmailValidator(allowedEmailRegexp),
+                forbiddenEmails.call(this)
             ]),
             password: this.fb.control('', [
                 Validators.required,
@@ -49,17 +57,24 @@ export class RegistrationComponent implements OnInit {
     }
 
     public isFieldHasError(fieldName: string, error: string): boolean {
-        return this.form.get(fieldName).hasError(error);
-        data.id = Date.now();
+        return this.form.get(fieldName)
+                   .hasError(error);
+    }
+
+    onSubmit(): void {
+        const data = this.form.value;
+
+        data.id = uniqId();
 
         if (this.form.valid) {
             this.usersService.createNewUser(data);
             this.form.reset();
-            this.router.navigate([ LOGIN ], {
+            this.router.navigate([ routes.LOGIN.routerPath ], {
                 queryParams: {
                     accessAllowed: true
                 }
             });
         }
     }
+
 }

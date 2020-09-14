@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user.model';
+import { IUser } from '../models/user.model';
 
 @Injectable()
 export class UsersService {
 
-    createNewUser(user: User): void {
+    createNewUser(user: IUser): void {
         const users = this.getUsers();
 
         users.push(user);
@@ -15,7 +15,7 @@ export class UsersService {
         return JSON.parse(window.localStorage.getItem('users')) || [];
     }
 
-    getUserByEmail(email: string): User {
+    getUserByEmail(email: string): IUser {
         const users = this.getUsers();
 
         return users.find(user => user.email === email);
