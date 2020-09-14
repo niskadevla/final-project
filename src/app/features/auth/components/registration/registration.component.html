@@ -1,6 +1,6 @@
 <section class="auth-page">
     <h3 class="auth-page-title">Registration page</h3>
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="mb-3">
             <label for="inputUsername1" class="form-label">Username</label>
             <input type="text"
@@ -25,12 +25,15 @@
                    aria-describedby="emailHelp"
                    formControlName="email"
                    [class.has-error]="getField('email').invalid && getField('email').touched">
-            <div id="emailHelp" class="text-danger" *ngIf="form.get('email').invalid && form.get('email').touched">
+            <div id="emailHelp" class="text-danger" *ngIf="getField('email').invalid && getField('email').touched">
                 <span *ngIf="getFieldErrors('email')?.required">Email is required;</span>
                 <span *ngIf="getFieldErrors('email')?.email">Email is incorrect;</span>
-                <span *ngIf="getFieldErrors('email')?.forbiddenValue">Email supports only (.com, .net, .org, .co, .us) domains;</span>
-                <span *ngIf="getFieldErrors('email')?.forbiddenValue">Only 5 symbols after @ allowed;</span>
-                <span *ngIf="getFieldErrors('email')?.forbiddenValue">No more than 3 dotts before @ allowed;</span>
+                <span *ngIf="getFieldErrors('email')?.forbiddenValue">
+                    Email supports only (.com, .net, .org, .co, .us) domains;
+                    Only 5 symbols after @ allowed;
+                    No more than 3 dotts before @ allowed;
+                </span>
+                <span *ngIf="getFieldErrors('email')?.forbiddenEmail">Email already exists</span>
             </div>
         </div>
         <div class="mb-3">
