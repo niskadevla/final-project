@@ -1,11 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import {HeaderModule} from './core/components/header/header.module';
 import {AppRoutingModule} from './app-routing.module';
-import {AuthModule} from './features/auth/auth.module';
 
 
 @NgModule({
@@ -14,10 +13,8 @@ import {AuthModule} from './features/auth/auth.module';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     ReactiveFormsModule,
     HeaderModule,
-    AuthModule,
     AppRoutingModule
   ],
   bootstrap: [AppComponent]

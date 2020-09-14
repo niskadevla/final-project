@@ -1,36 +1,29 @@
 <section class="auth-page">
-  <h3 class="auth-page-title">Login page</h3>
-  <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
-    <div class="mb-3">
-      <label for="inputEmail1" class="form-label">Email</label>
-      <input
-        ngModel
-        type="email"
-        name="email"
-        class="form-control"
-        id="inputEmail1"
-        aria-describedby="emailHelp"
-        email
-        required
-      />
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-      <label for="inputPassword1" class="form-label">Password</label>
-      <input
-        ngModel
-        type="password"
-        name="password"
-        class="form-control"
-        id="inputPassword1"
-        aria-describedby="passwordHelp"
-        required
-      >
-      <div id="passwordHelp" class="form-text">We'll never share your password with anyone else.</div>
-    </div>
-    <div class="mb-3">
-      <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Sign in</button>
-      <a class="btn btn-secondary" [routerLink]="'/registration'">Create new account</a>
-    </div>
-  </form>
+    <h3 class="auth-page-title">Login page</h3>
+    <form [formGroup]="form">
+        <div class="mb-3">
+            <label for="inputEmail1" class="form-label">Email</label>
+            <input type="email"
+                   class="form-control"
+                   id="inputEmail1"
+                   aria-describedby="emailHelp"
+                   formControlName="email"
+                   [class.has-error]="getField('email')?.invalid && getField('email')?.touched"/>
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <label for="inputPassword1" class="form-label">Password</label>
+            <input type="password"
+                   class="form-control"
+                   id="inputPassword1"
+                   aria-describedby="passwordHelp"
+                   formControlName="password"
+                   [class.has-error]="getField('password')?.invalid && getField('password')?.touched">
+            <div id="passwordHelp" class="form-text">We'll never share your password with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Sign in</button>
+            <a class="btn btn-secondary" [routerLink]="route">Create new account</a>
+        </div>
+    </form>
 </section>

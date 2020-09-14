@@ -1,6 +1,6 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export function allowedIfOnlyOneValidator(arrRe): ValidatorFn {
+export function allowedNameValidator(arrRe: RegExp[]): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
         const value = control.value;
         let forbidden = true;
@@ -12,13 +12,6 @@ export function allowedIfOnlyOneValidator(arrRe): ValidatorFn {
         }
 
         return forbidden ? {forbiddenCase: {value}} : null;
-    };
-}
-
-export function allowedRegExpValidator(nameRe: RegExp): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-        const forbidden = !nameRe.test(control.value);
-        return forbidden ? {forbiddenValue: {value: control.value}} : null;
     };
 }
 
