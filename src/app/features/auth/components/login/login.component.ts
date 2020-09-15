@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
     ngOnInit(): void {
         this.message = new Message('', 'danger');
 
-
         this.initForm();
 
         this.route.queryParams
@@ -41,6 +40,11 @@ export class LoginComponent implements OnInit {
                 } else if (params.accessDenied) {
                     this.showMessage({
                         text: 'You should login to system',
+                        type: 'danger'
+                    });
+                } else if (params.sessionHasExpired) {
+                    this.showMessage({
+                        text: 'Your current session has expired. Please login again to continue using this app!',
                         type: 'danger'
                     });
                 }
@@ -96,8 +100,7 @@ export class LoginComponent implements OnInit {
                 const userToken = this.createUserToken(user);
 
                 this.message.text = '';
-                window.localStorage.setItem('user', JSON.stringify(userToken));
-                this.authService.login();
+                this.authService.login(userToken);
                 this.router.navigate([routes.HEROES.routerPath]);
             } else {
                 this.showMessage({

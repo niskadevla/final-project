@@ -7,12 +7,11 @@ import { HeaderModule } from './core/components/header/header.module';
 import { AppRoutingModule } from './app-routing.module';
 import { UsersService } from './shared/services/users.service';
 import { AuthService } from './shared/services/auth.service';
-import { HeroesComponent } from './features/heroes/heroes.component';
+import { AuthGuard } from './shared/services/auth.guard';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        HeroesComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
@@ -22,7 +21,8 @@ import { HeroesComponent } from './features/heroes/heroes.component';
     ],
     providers: [
         UsersService,
-        AuthService
+        AuthService,
+        AuthGuard
     ],
     bootstrap: [ AppComponent ]
 })

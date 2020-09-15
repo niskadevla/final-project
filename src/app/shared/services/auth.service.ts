@@ -1,8 +1,12 @@
+import { IUserToken } from '../models/user-token.model';
+import { lifeTime } from '../utils/constants';
+
 export class AuthService {
 
-  private isAuthenticated = false;
+  private isAuthenticated = !this.isTokenExpired();
 
-  login(): void {
+  login(userToken: IUserToken): void {
+      window.localStorage.setItem('user', JSON.stringify(userToken));
       this.isAuthenticated = true;
   }
 
@@ -13,5 +17,15 @@ export class AuthService {
 
   isLoggedIn(): boolean {
       return this.isAuthenticated;
+  }
+
+  isTokenExpired(): boolean {
+      const user: IUserToken = JSON.parse(window.localStorage.getItem('user'));
+
+      if (!user) {
+          return true;
+      }
+
+      return user.timeStamp + lifeTime < Date.now();
   }
 }
