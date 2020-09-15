@@ -17,8 +17,8 @@
             <div id="emailHelp"
                  class="text-danger"
                  *ngIf="getField('email')?.invalid && getField('email')?.touched">
-                <span *ngIf="getFieldErrors('email')?.required">Email is required;</span>
-                <span *ngIf="getFieldErrors('email')?.email">Email is incorrect;</span>
+                <span *ngIf="isFieldHasError('email', 'required')">Email is required;</span>
+                <span *ngIf="isFieldHasError('email', 'email')">Email is incorrect;</span>
             </div>
         </div>
         <div class="mb-3">
@@ -32,8 +32,8 @@
             <div id="passwordHelp"
                  class="text-danger"
                  *ngIf="getField('password')?.invalid && getField('password')?.touched">
-                <span *ngIf="getFieldErrors('password')?.required">Password is required;</span>
-                <span *ngIf="getFieldErrors('password')?.minlength">should be at least 5 characters length;</span>
+                <span *ngIf="isFieldHasError('password', 'required')">Password is required;</span>
+                <span *ngIf="isFieldHasError('password', 'minlength')">should be at least 5 characters length;</span>
             </div>
         </div>
         <div class="mb-3">

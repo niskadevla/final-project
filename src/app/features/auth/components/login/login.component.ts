@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -73,8 +73,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         return this.form.get(fieldName);
     }
 
-    getFieldErrors(fieldName: string): ValidationErrors {
-        return this.form.get(fieldName).errors;
+    public isFieldHasError(fieldName: string, error: string): boolean {
+        return this.form.get(fieldName)
+                   .hasError(error);
     }
 
     private showMessage(message: Message): void {
