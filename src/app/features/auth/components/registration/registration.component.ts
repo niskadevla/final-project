@@ -62,7 +62,7 @@ export class RegistrationComponent implements OnInit {
     }
 
     onSubmit(): void {
-        const data = this.form.value;
+        const { value: data } = this.form;
 
         data.id = uniqId();
 

@@ -1,5 +1,5 @@
 import { IUserToken } from '../models/user-token.model';
-import { lifeTime } from '../utils/constants';
+import { tokenLifeTime } from '../utils/constants';
 
 export class AuthService {
 
@@ -26,6 +26,6 @@ export class AuthService {
           return true;
       }
 
-      return user.timeStamp + lifeTime < Date.now();
+      return user.timeStamp + tokenLifeTime < Date.now();
   }
 }

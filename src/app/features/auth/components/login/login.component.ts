@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Message } from '../../../../shared/models/message.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { UsersService } from '../../../../shared/services/users.service';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { routes } from '../../../../core/routes/app-routes';
 import { IUserToken } from '../../../../shared/models/user-token.model';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,11 +14,12 @@ import { IUserToken } from '../../../../shared/models/user-token.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
     message: Message;
     form: FormGroup;
     link = '/' + routes.REGISTRATION.routerPath;
+    subscribtion: Subscription;
 
     constructor(private fb: FormBuilder,
                 private router: Router,
@@ -30,7 +32,7 @@ export class LoginComponent implements OnInit {
 
         this.initForm();
 
-        this.route.queryParams
+        this.subscribtion = this.route.queryParams
             .subscribe( (params: Params) => {
                 if (params.accessAllowed) {
                     this.showMessage({
@@ -49,6 +51,10 @@ export class LoginComponent implements OnInit {
                     });
                 }
             });
+    }
+
+    ngOnDestroy(): void {
+        this.subscribtion.unsubscribe();
     }
 
     initForm(): void {
