@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { allowedNameValidator } from '../../validators/user-name.validator';
-import { allowedEmailValidator, forbiddenEmails } from '../../validators/email.validator';
-import { allowedPasswordValidator, identityRevealedValidator } from '../../validators/password.validator';
+import { allowedNameValidator } from '../../../../shared/validators/user-name.validator';
+import { allowedEmailValidator, forbiddenEmails } from '../../../../shared/validators/email.validator';
+import { allowedPasswordValidator, identityRevealedValidator } from '../../../../shared/validators/password.validator';
 import { UsersService } from '../../../../shared/services/users.service';
-import { allowedEmailRegexp, allowedPasswordRegexp, camelCaseRegexp, kebabCaseRegexp, spaceCaseRegexp } from '../../../../shared/utils/constants';
+import { allowedEmailRegexp, allowedPasswordRegexp, camelCaseRegexp, kebabCaseRegexp, spaceCaseRegexp } from '../../../../shared/utils/regexps';
 import { routes } from '../../../../core/routes/app-routes';
 import { uniqId } from '../../../../shared/utils/uniqId';
 
@@ -69,7 +69,8 @@ export class RegistrationComponent implements OnInit {
             this.form.reset();
             this.router.navigate([ routes.LOGIN.routerPath ], {
                 queryParams: {
-                    accessAllowed: true
+                    accessAllowed: true,
+                    message: 'accessAllowed'
                 }
             });
         }

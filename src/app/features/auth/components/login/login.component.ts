@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+// import { takeUntil, tap } from 'rxjs/operators';
 
 import { Message } from '../../../../shared/models/message.model';
 import { UsersService } from '../../../../shared/services/users.service';
@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     message: Message;
     form: FormGroup;
-    link = '/' + routes.REGISTRATION.routerPath;
+    routes = routes;
 
-    // componentDestroyed: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    componentDestroyed: ReplaySubject<any> = new ReplaySubject<any>(1);
+    componentDestroyed: BehaviorSubject<void> = new BehaviorSubject<void>(null);
+    // componentDestroyed: ReplaySubject<any> = new ReplaySubject<any>(1);
 
     constructor(private fb: FormBuilder,
                 private router: Router,
@@ -44,6 +44,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.componentDestroyed.complete();
     }
 
+    setMessage(): void {
+        this.message = new Message('', 'danger');
+    }
+
     initForm(): void {
         this.form = this.fb.group(
             {
@@ -53,18 +57,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         );
     }
 
-    setMessage(): void {
-        this.message = new Message('', 'danger');
-    }
+// .pipe(tap(console.log))
+// .pipe(takeUntil(this.componentDestroyed))
 
     queryParamsSubscribe(): void {
         this.route.queryParams
-            .pipe(takeUntil(this.componentDestroyed))
-            .subscribe((params: Params) => {
-                for (const [key, value] of Object.entries(QUERY_PARAMS)) {
-                    if (params[key]) {
-                        this.showMessage(value);
-                    }
+            .subscribe(({ message }: Params) => {
+                if (QUERY_PARAMS[message]) {
+                    this.showMessage(QUERY_PARAMS[message]);
                 }
             });
     }
@@ -73,26 +73,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         return this.form.get(fieldName);
     }
 
-    public isFieldHasError(fieldName: string, error: string): boolean {
+    isFieldHasError(fieldName: string, error: string): boolean {
         return this.form.get(fieldName)
                    .hasError(error);
-    }
-
-    private showMessage(message: Message): void {
-        this.message = message;
-    }
-
-    getTimeStamp(): number {
-        return Date.now();
-    }
-
-    private createUserToken({ name, email }: IUser): IUserToken {
-        return {
-            name,
-            email,
-            token: this.getTimeStamp(),
-            timeStamp: this.getTimeStamp()
-        };
     }
 
     onSubmit(): void {
@@ -101,7 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         if (!user) {
             this.showMessage({
-                text: 'User didn\'t find',
+                text: `User didn't find`,
                 type: 'danger'
             });
 
@@ -118,12 +101,34 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
+    private showMessage(message: Message): void {
+        this.message = message;
+    }
+
     private loginUser(user: IUser): void {
         const userToken: IUserToken = this.createUserToken(user);
 
         this.message.text = '';
         this.authService.login(userToken);
-        this.router.navigate([ routes.HEROES.routerPath ]);
+        this.router.navigate([ routes.HEROES.routerPath ], {
+            queryParams: {
+                accessAllowed: true,
+                message: 'accessAllowed'
+            }
+        });
+    }
+
+    private createUserToken({ name, email }: IUser): IUserToken {
+        return {
+            name,
+            email,
+            token: this.getTimeStamp(),
+            timeStamp: this.getTimeStamp()
+        };
+    }
+
+    getTimeStamp(): number {
+        return Date.now();
     }
 
 }

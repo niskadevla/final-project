@@ -1,6 +1,6 @@
 <section class="auth-page">
-    <div class="alert alert-{{message.type}}"
-         *ngIf="message.text">
+    <div *ngIf="message.text"
+         class="alert alert-{{message.type}}">
         {{message.text}}
     </div>
 
@@ -8,37 +8,38 @@
     <form [formGroup]="form">
         <div class="mb-3">
             <label for="inputEmail1" class="form-label">Email</label>
-            <input type="email"
+            <input formControlName="email"
+                   [class.has-error]="getField('email')?.invalid && getField('email')?.touched"
+                   type="email"
                    class="form-control"
                    id="inputEmail1"
                    aria-describedby="emailHelp"
-                   formControlName="email"
-                   [class.has-error]="getField('email')?.invalid && getField('email')?.touched"/>
-            <div id="emailHelp"
-                 class="text-danger"
-                 *ngIf="getField('email')?.invalid && getField('email')?.touched">
+                   />
+            <div *ngIf="getField('email')?.invalid && getField('email')?.touched"
+                 id="emailHelp"
+                 class="text-danger">
                 <span *ngIf="isFieldHasError('email', 'required')">Email is required;</span>
                 <span *ngIf="isFieldHasError('email', 'email')">Email is incorrect;</span>
             </div>
         </div>
         <div class="mb-3">
             <label for="inputPassword1" class="form-label">Password</label>
-            <input type="password"
+            <input formControlName="password"
+                   [class.has-error]="getField('password')?.invalid && getField('password')?.touched"
+                   type="password"
                    class="form-control"
                    id="inputPassword1"
-                   aria-describedby="passwordHelp"
-                   formControlName="password"
-                   [class.has-error]="getField('password')?.invalid && getField('password')?.touched">
-            <div id="passwordHelp"
-                 class="text-danger"
-                 *ngIf="getField('password')?.invalid && getField('password')?.touched">
+                   aria-describedby="passwordHelp">
+            <div *ngIf="getField('password')?.invalid && getField('password')?.touched"
+                 id="passwordHelp"
+                 class="text-danger">
                 <span *ngIf="isFieldHasError('password', 'required')">Password is required;</span>
                 <span *ngIf="isFieldHasError('password', 'minlength')">should be at least 5 characters length;</span>
             </div>
         </div>
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary" [disabled]="form.invalid" (click)="onSubmit()">Sign in</button>
-            <a class="btn btn-secondary" [routerLink]="link">Create new account</a>
+            <button [disabled]="form.invalid" (click)="onSubmit()" type="submit" class="btn btn-primary">Sign in</button>
+            <a [routerLink]="routes.REGISTRATION.fullPath" class="btn btn-secondary">Create new account</a>
         </div>
     </form>
 </section>

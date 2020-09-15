@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../models/user.model';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class UsersService {
 
     createNewUser(user: IUser): void {
@@ -11,7 +13,7 @@ export class UsersService {
         window.localStorage.setItem('users', JSON.stringify(users));
     }
 
-    getUsers(): any[] {
+    getUsers(): IUser[] {
         return JSON.parse(window.localStorage.getItem('users')) || [];
     }
 

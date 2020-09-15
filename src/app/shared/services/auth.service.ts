@@ -1,9 +1,13 @@
 import { IUserToken } from '../models/user-token.model';
 import { tokenLifeTime } from '../utils/constants';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+    providedIn: 'root',
+})
 export class AuthService {
 
-  private isAuthenticated = !this.isTokenExpired();
+  private isAuthenticated = !this.isTokenExpired(this.getUserToken());
 
   login(userToken: IUserToken): void {
       window.localStorage.setItem('user', JSON.stringify(userToken));
@@ -19,13 +23,16 @@ export class AuthService {
       return this.isAuthenticated;
   }
 
-  isTokenExpired(): boolean {
-      const user: IUserToken = JSON.parse(window.localStorage.getItem('user'));
+  isTokenExpired(user: IUserToken): boolean {
 
       if (!user) {
           return true;
       }
 
       return user.timeStamp + tokenLifeTime < Date.now();
+  }
+
+  getUserToken(): IUserToken {
+      return JSON.parse(window.localStorage.getItem('user'));
   }
 }

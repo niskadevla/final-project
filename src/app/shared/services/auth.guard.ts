@@ -11,7 +11,9 @@ import { routes } from '../../core/routes/app-routes';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthGuard implements CanActivate, CanActivateChild {
 
     constructor(private authService: AuthService, private router: Router) {}
@@ -24,7 +26,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             this.authService.logout();
             this.router.navigate([ routes.LOGIN.routerPath ], {
                 queryParams: {
-                    sessionHasExpired: true
+                    sessionHasExpired: true,
+                    message: 'sessionHasExpired'
                 }
             });
         }

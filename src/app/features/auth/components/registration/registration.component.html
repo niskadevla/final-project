@@ -3,13 +3,13 @@
     <form [formGroup]="form">
         <div class="mb-3">
             <label for="inputUsername1" class="form-label">Username</label>
-            <input type="text"
+            <input formControlName="name"
+                   [class.has-error]="getField('name').invalid && getField('name').touched"
+                   type="text"
                    class="form-control"
                    id="inputUsername1"
-                   aria-describedby="userHelp"
-                   formControlName="name"
-                   [class.has-error]="getField('name').invalid && getField('name').touched">
-            <div id="userHelp" class="text-danger" *ngIf="getField('name').invalid && getField('name').touched">
+                   aria-describedby="userHelp">
+            <div *ngIf="getField('name').invalid && getField('name').touched" id="userHelp" class="text-danger">
                 <span *ngIf="isFieldHasError('name', 'required')">User name is required;</span>
                 <span *ngIf="isFieldHasError('name', 'minlength')">
                     User name should be at least {{ getField('name')?.errors?.minlength?.requiredLength}} characters length;
@@ -22,13 +22,13 @@
         </div>
         <div class="mb-3">
             <label for="inputEmail1" class="form-label">Email address</label>
-            <input type="email"
+            <input formControlName="email"
+                   [class.has-error]="getField('email').invalid && getField('email').touched"
+                   type="email"
                    class="form-control"
                    id="inputEmail1"
-                   aria-describedby="emailHelp"
-                   formControlName="email"
-                   [class.has-error]="getField('email').invalid && getField('email').touched">
-            <div id="emailHelp" class="text-danger" *ngIf="form.get('email').invalid && form.get('email').touched">
+                   aria-describedby="emailHelp">
+            <div *ngIf="form.get('email').invalid && form.get('email').touched" id="emailHelp" class="text-danger">
                 <span *ngIf="isFieldHasError('email', 'required')">Email is required;</span>
                 <span *ngIf="isFieldHasError('email', 'email')">Email is incorrect;</span>
                 <span *ngIf="isFieldHasError('email', 'forbiddenValue')">
@@ -41,16 +41,16 @@
         </div>
         <div class="mb-3">
             <label for="inputPassword1" class="form-label">Password</label>
-            <input type="password"
+            <input formControlName="password"
+                   [class.has-error]="getField('password').invalid && getField('password').touched"
+                   type="password"
                    class="form-control"
                    id="inputPassword1"
-                   aria-describedby="passwordHelp"
-                   formControlName="password"
-                   [class.has-error]="getField('password').invalid && getField('password').touched">
-            <div id="passwordHelp"
-                 class="text-danger"
-                 *ngIf="(form.errors?.identityRevealed && getField('password').touched)
-                            || (getField('password').invalid && getField('password').touched)">
+                   aria-describedby="passwordHelp">
+            <div *ngIf="(form.errors?.identityRevealed && getField('password').touched)
+                            || (getField('password').invalid && getField('password').touched)"
+                 id="passwordHelp"
+                 class="text-danger">
                 <span *ngIf="isFieldHasError('password', 'required')">password is required;</span>
                 <span *ngIf="isFieldHasError('password', 'minlength')">
                     should be at least {{ getField('password')?.errors?.minlength?.requiredLength}} characters length;
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary" [disabled]="form.invalid" (click)="onSubmit()">Create account</button>
+            <button [disabled]="form.invalid" (click)="onSubmit()" type="submit" class="btn btn-primary">Create account</button>
         </div>
     </form>
 </section>
