@@ -1,69 +1,72 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Message } from '../../../../shared/models/message.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { Message } from '../../../../shared/models/message.model';
 import { UsersService } from '../../../../shared/services/users.service';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { routes } from '../../../../core/routes/app-routes';
 import { IUserToken } from '../../../../shared/models/user-token.model';
-import { Subscription } from 'rxjs';
-
+import { IUser } from '../../../../shared/models/user.model';
+import { QUERY_PARAMS } from '../../../../shared/utils/constants';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: [ './login.component.scss' ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
     message: Message;
     form: FormGroup;
     link = '/' + routes.REGISTRATION.routerPath;
-    subscribtion: Subscription;
+
+    // componentDestroyed: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    componentDestroyed: ReplaySubject<any> = new ReplaySubject<any>(1);
 
     constructor(private fb: FormBuilder,
                 private router: Router,
                 private route: ActivatedRoute,
                 private usersService: UsersService,
-                private authService: AuthService) {}
+                private authService: AuthService) {
+    }
 
     ngOnInit(): void {
-        this.message = new Message('', 'danger');
-
+        this.setMessage();
         this.initForm();
-
-        this.subscribtion = this.route.queryParams
-            .subscribe( (params: Params) => {
-                if (params.accessAllowed) {
-                    this.showMessage({
-                        text: 'Now we migth login to system',
-                        type: 'success'
-                    });
-                } else if (params.accessDenied) {
-                    this.showMessage({
-                        text: 'You should login to system',
-                        type: 'danger'
-                    });
-                } else if (params.sessionHasExpired) {
-                    this.showMessage({
-                        text: 'Your current session has expired. Please login again to continue using this app!',
-                        type: 'danger'
-                    });
-                }
-            });
+        this.queryParamsSubscribe();
     }
 
     ngOnDestroy(): void {
-        this.subscribtion.unsubscribe();
+        this.componentDestroyed.next(null);
+        this.componentDestroyed.complete();
     }
 
     initForm(): void {
         this.form = this.fb.group(
             {
-                email: this.fb.control('', [Validators.required, Validators.email]),
-                password: this.fb.control('', [Validators.required, Validators.minLength(5)])
+                email: this.fb.control('', [ Validators.required, Validators.email ]),
+                password: this.fb.control('', [ Validators.required, Validators.minLength(5) ])
             }
         );
+    }
+
+    setMessage(): void {
+        this.message = new Message('', 'danger');
+    }
+
+    queryParamsSubscribe(): void {
+        this.route.queryParams
+            .pipe(takeUntil(this.componentDestroyed))
+            .subscribe((params: Params) => {
+                for (const [key, value] of Object.entries(QUERY_PARAMS)) {
+                    if (params[key]) {
+                        this.showMessage(value);
+                    }
+                }
+            });
     }
 
     getField(fieldName: string): AbstractControl {
@@ -76,50 +79,50 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     private showMessage(message: Message): void {
         this.message = message;
-
-        window.setTimeout(() => this.message.text = '', 5000);
     }
 
-    private getToken(): number {
+    getTimeStamp(): number {
         return Date.now();
     }
 
-    private getTimeStamp(): number {
-        return Date.now();
-    }
-
-    private createUserToken(user): IUserToken {
+    private createUserToken({ name, email }: IUser): IUserToken {
         return {
-            name: user.name,
-            email: user.email,
-            token: this.getToken(),
+            name,
+            email,
+            token: this.getTimeStamp(),
             timeStamp: this.getTimeStamp()
         };
     }
 
     onSubmit(): void {
-        const data = this.form.value;
-        const user = this.usersService.getUserByEmail(data.email);
+        const data = {...this.form.value};
+        const user: IUser = this.usersService.getUserByEmail(data.email);
 
-        if (user) {
-            if (user.password === data.password) {
-                const userToken = this.createUserToken(user);
-
-                this.message.text = '';
-                this.authService.login(userToken);
-                this.router.navigate([routes.HEROES.routerPath]);
-            } else {
-                this.showMessage({
-                    text: 'Password is incorrect',
-                    type: 'danger'
-                });
-            }
-        } else {
+        if (!user) {
             this.showMessage({
                 text: 'User didn\'t find',
                 type: 'danger'
             });
+
+            return;
         }
+
+        if (user.password === data.password) {
+            this.loginUser(user);
+        } else {
+            this.showMessage({
+                text: 'Password is incorrect',
+                type: 'danger'
+            });
+        }
+    }
+
+    private loginUser(user: IUser): void {
+        const userToken: IUserToken = this.createUserToken(user);
+
+        this.message.text = '';
+        this.authService.login(userToken);
+        this.router.navigate([ routes.HEROES.routerPath ]);
     }
 
 }

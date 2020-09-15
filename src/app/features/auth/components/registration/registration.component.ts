@@ -62,9 +62,7 @@ export class RegistrationComponent implements OnInit {
     }
 
     onSubmit(): void {
-        const { value: data } = this.form;
-
-        data.id = uniqId();
+        const data = {...this.form.value, id: uniqId()};
 
         if (this.form.valid) {
             this.usersService.createNewUser(data);

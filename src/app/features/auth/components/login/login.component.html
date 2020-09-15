@@ -5,7 +5,7 @@
     </div>
 
     <h3 class="auth-page-title">Login page</h3>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form">
         <div class="mb-3">
             <label for="inputEmail1" class="form-label">Email</label>
             <input type="email"
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Sign in</button>
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid" (click)="onSubmit()">Sign in</button>
             <a class="btn btn-secondary" [routerLink]="link">Create new account</a>
         </div>
     </form>
