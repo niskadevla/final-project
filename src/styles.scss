@@ -1,4 +1,5 @@
 @import "src/styles/styles-variables";
+
 .auth-page {
   max-width: 800px;
   margin: 1rem auto;
@@ -47,4 +48,17 @@
         text-decoration: none;
         cursor: pointer;
     }
+}
+
+.search,
+.heroes {
+    margin-top: $MARGIN_TOP_BLOCK;
+
+    &-item {
+        align-items: center;
+    }
+}
+
+.btn-select {
+    align-self: center;
 }
