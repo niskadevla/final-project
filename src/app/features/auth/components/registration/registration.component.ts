@@ -52,11 +52,16 @@ export class RegistrationComponent implements OnInit {
         }, { validators: identityRevealedValidator });
     }
 
-    public getField(fieldName: string): AbstractControl {
+    isPasswordIncorrect(): boolean {
+        return (this.form.errors?.identityRevealed && this.getField('password').touched)
+            || (this.getField('password').invalid && this.getField('password').touched);
+    }
+
+    getField(fieldName: string): AbstractControl {
         return this.form.get(fieldName);
     }
 
-    public isFieldHasError(fieldName: string, error: string): boolean {
+    isFieldHasError(fieldName: string, error: string): boolean {
         return this.form.get(fieldName)
                    .hasError(error);
     }

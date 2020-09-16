@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-// import { takeUntil, tap } from 'rxjs/operators';
 
 import { Message } from '../../../../shared/models/message.model';
 import { UsersService } from '../../../../shared/services/users.service';
@@ -24,7 +23,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     routes = routes;
 
     componentDestroyed: BehaviorSubject<void> = new BehaviorSubject<void>(null);
-    // componentDestroyed: ReplaySubject<any> = new ReplaySubject<any>(1);
 
     constructor(private fb: FormBuilder,
                 private router: Router,
@@ -55,9 +53,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             }
         );
     }
-
-// .pipe(tap(console.log))
-// .pipe(takeUntil(this.componentDestroyed))
 
     queryParamsSubscribe(): void {
         this.route.queryParams

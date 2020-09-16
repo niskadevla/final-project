@@ -47,8 +47,7 @@
                    class="form-control"
                    id="inputPassword1"
                    aria-describedby="passwordHelp">
-            <div *ngIf="(form.errors?.identityRevealed && getField('password').touched)
-                            || (getField('password').invalid && getField('password').touched)"
+            <div *ngIf="isPasswordIncorrect()"
                  id="passwordHelp"
                  class="text-danger">
                 <span *ngIf="isFieldHasError('password', 'required')">password is required;</span>
