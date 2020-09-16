@@ -1,5 +1,22 @@
-export const camelCaseRegexp =  /^[a-z]+[A-Z]{1}[a-z]+$/;
-export const kebabCaseRegexp =  /^[a-z]+-{1}[a-z]+$/;
-export const spaceCaseRegexp =  /^[A-Z]{1}[a-z]+[A-Z]{1}[a-z]+$/;
-export const allowedEmailRegexp = /^(\w+\.?){0,3}@(\w){0,5}(\.com|\.net|\.org|\.co|\.us)$/;
-export const allowedPasswordRegexp =  /\w(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/;
+import { Message } from '../models/message.model';
+import { QueryParamsMapKeysEnum } from './enums';
+
+export const tokenLifeTime: number = 60 * 60 * 1000;
+
+export const QUERY_PARAMS: {[key in QueryParamsMapKeysEnum]: Message} = {
+    [QueryParamsMapKeysEnum.ACCESS_ALLOWED]: {
+        text: 'Now we might login to system',
+        type: 'success'
+    },
+    [QueryParamsMapKeysEnum.ACCESS_DENIED]: {
+        text: 'You should login to system',
+        type: 'danger'
+    },
+    [QueryParamsMapKeysEnum.SESSION_HAS_EXPIRED]: {
+        text: 'Your current session has expired. Please login again to continue using this app!',
+        type: 'danger'
+    }
+};
+
+
+
