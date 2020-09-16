@@ -3,36 +3,36 @@ import { tokenLifeTime } from '../utils/constants';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class AuthService {
 
-  private isAuthenticated = !this.isTokenExpired(this.getUserToken());
+    private isAuthenticated = !this.isTokenExpired(this.getUserToken());
 
-  login(userToken: IUserToken): void {
-      window.localStorage.setItem('user', JSON.stringify(userToken));
-      this.isAuthenticated = true;
-  }
+    private getUserToken(): IUserToken {
+        return JSON.parse(window.localStorage.getItem('user'));
+    }
 
-  logout(): void {
-      window.localStorage.removeItem('user');
-      this.isAuthenticated = false;
-  }
+    login(userToken: IUserToken): void {
+        window.localStorage.setItem('user', JSON.stringify(userToken));
+        this.isAuthenticated = true;
+    }
 
-  isLoggedIn(): boolean {
-      return this.isAuthenticated;
-  }
+    logout(): void {
+        window.localStorage.removeItem('user');
+        this.isAuthenticated = false;
+    }
 
-  isTokenExpired(user: IUserToken): boolean {
+    isLoggedIn(): boolean {
+        return this.isAuthenticated;
+    }
 
-      if (!user) {
-          return true;
-      }
+    isTokenExpired(user: IUserToken): boolean {
 
-      return user.timeStamp + tokenLifeTime < Date.now();
-  }
+        if (!user) {
+            return true;
+        }
 
-  getUserToken(): IUserToken {
-      return JSON.parse(window.localStorage.getItem('user'));
-  }
+        return user.timeStamp + tokenLifeTime < Date.now();
+    }
 }

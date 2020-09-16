@@ -30,8 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private route: ActivatedRoute,
                 private usersService: UsersService,
-                private authService: AuthService) {
-    }
+                private authService: AuthService) {}
 
     ngOnInit(): void {
         this.setMessage();
