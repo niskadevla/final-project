@@ -1,25 +1,2 @@
-@import "src/styles/styles-variables";
-.selection-page {
-    position: relative;
-    margin-right: auto;
-    margin-left: auto;
-}
 
-.alphabet {
-    position: absolute;
-    left: -2.5rem;
-    top: 3.2rem;
-    z-index: 9;
 
-    &-inner a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 2rem;
-        height: 2rem;
-        border: 3px solid $PURPLE;
-        border-radius: 50%;
-        text-decoration: none;
-        cursor: pointer;
-    }
-}

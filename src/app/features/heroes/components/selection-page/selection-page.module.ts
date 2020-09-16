@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SelectionPageComponent } from './selection-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { HeroesSearchModule } from './components/heroes-search/heroes-search.module';
+import { AlphabetModule } from './components/alphabet/alphabet.module';
+import { HeroesListModule } from './components/heroes-list/heroes-list.module';
 
 @NgModule({
     declarations: [
@@ -9,7 +11,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     ],
     imports: [
         CommonModule,
-        ReactiveFormsModule
+        HeroesSearchModule,
+        AlphabetModule,
+        HeroesListModule
     ],
     exports: [
         SelectionPageComponent
