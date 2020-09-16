@@ -3,6 +3,7 @@ import { IAppRotes } from './route.model';
 export const routes: IAppRotes = {
     LOGIN: { routerPath: 'login' },
     REGISTRATION: { routerPath: 'registration', fullPath: '/registration' },
-    HEROES: { routerPath: 'heroes' }
+    HEROES: { routerPath: 'heroes' },
+    SELECTION_PAGE: { routerPath: 'selection-page' }
 };
 

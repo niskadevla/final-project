@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { HeroesComponent } from './heroes.component';
 import { HeroesRoutingModule } from './heroes-routing.module';
-
-
-
+import { SelectionPageModule } from './components/selection-page/selection-page.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +11,8 @@ import { HeroesRoutingModule } from './heroes-routing.module';
   ],
   imports: [
     CommonModule,
-    HeroesRoutingModule
+    HeroesRoutingModule,
+    SelectionPageModule
   ],
     exports: [
         HeroesComponent
