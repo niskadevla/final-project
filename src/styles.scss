@@ -1,5 +1,17 @@
 @import "src/styles/styles-variables";
 
+a {
+    font-weight: bold;
+    color: $MAIN_COLOR;
+    text-decoration: none;
+
+    &:hover,
+    &:active {
+        color: lighten($MAIN_COLOR, $MAIN_AMOUNT);
+        cursor: pointer;
+    }
+}
+
 .auth-page {
   max-width: 800px;
   margin: 1rem auto;
