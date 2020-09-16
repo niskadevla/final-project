@@ -68,6 +68,12 @@ a {
 
     &-item {
         align-items: center;
+        padding: .5rem 2rem;
+    }
+
+    &-item img {
+        width: 100%;
+        height: auto;
     }
 }
 
