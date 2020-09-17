@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IUserInfo, UserInfo } from '../models/user-info';
-import { IHero } from '../models/hero.model';
+import { Hero, IHero } from '../models/hero.model';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -26,7 +26,7 @@ export class UserInfoService {
 
     getUserInfo(): IUserInfo {
         return JSON.parse(window.localStorage.getItem('userInfo'))
-            || new UserInfo('', []);
+            || new UserInfo('', [new Hero()]);
     }
 
     getSelectedHeroes(): IHero[] {
