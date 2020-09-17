@@ -4,7 +4,7 @@
         <div class="card-body">
            <p class="card-text">Result: <span>100</span></p>
         </div>
-        <ul class="heroes-list list-group list-group-flush">
+        <ul *ngIf="userInfo.searchQuery" class="heroes-list list-group list-group-flush">
             <li *ngFor="let hero of heroes" class="list-group-item">
                 <div class="card mb-3">
                     <div class="heroes-item row">

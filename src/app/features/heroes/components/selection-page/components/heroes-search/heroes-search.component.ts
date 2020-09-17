@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { allowedLettersRegExp } from '../../../../../../shared/utils/regexps';
 import { UserInfoService } from '../../../../../../shared/services/user-info.service';
+import { IUserInfo } from '../../../../../../shared/models/user-info';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-heroes-search',
@@ -10,10 +12,15 @@ import { UserInfoService } from '../../../../../../shared/services/user-info.ser
 })
 export class HeroesSearchComponent implements OnInit {
 
+    userInfo: IUserInfo;
+    subscription: Subscription = null;
     form: FormGroup;
 
     constructor(private fb: FormBuilder,
                 private userInfoService: UserInfoService) {
+        this.subscription = this.userInfoService.userInfo$.subscribe(userInfo => {
+            this.userInfo = userInfo;
+        });
     }
 
     ngOnInit(): void {

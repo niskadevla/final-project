@@ -2,26 +2,25 @@ import { Injectable } from '@angular/core';
 import { IUserInfo, UserInfo } from '../models/user-info';
 import { Hero, IHero } from '../models/hero.model';
 import { ApiService } from './api.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserInfoService {
 
+    private userInfoSubject: BehaviorSubject<IUserInfo> = new BehaviorSubject(this.getUserInfo());
+    userInfo$: Observable<IUserInfo> = this.userInfoSubject.asObservable();
+
     constructor(public apiService: ApiService ) {}
 
-    createUserInfo(userInfo: IUserInfo): void {
-        if (!this.getUserInfo()) {
-            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-        }
+    setUserInfo(userInfo: IUserInfo): void {
+        this.userInfoSubject.next(userInfo);
     }
 
     updateUserInfo(userInfo: IUserInfo): void {
-        if (this.getUserInfo()) {
-            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-        } else {
-            this.createUserInfo(userInfo);
-        }
+        window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        this.setUserInfo(userInfo);
     }
 
     getUserInfo(): IUserInfo {
