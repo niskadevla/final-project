@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { allowedLettersRegExp } from '../../../../../../shared/utils/regexps';
+import { UserInfoService } from '../../../../../../shared/services/user-info.service';
 
 @Component({
   selector: 'app-heroes-search',
@@ -11,7 +12,8 @@ export class HeroesSearchComponent implements OnInit {
 
     form: FormGroup;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder,
+                public userInfo: UserInfoService) {
     }
 
     ngOnInit(): void {
@@ -27,9 +29,9 @@ export class HeroesSearchComponent implements OnInit {
     }
 
     onSubmit(): void {
-        console.log(this.form.value);
-        console.log(this.form);
-        // console.log(this.form.get('search').errors);
+        if (this.form.valid) {
+            this.userInfo.setUserInfoSearchQuery(this.getField('search').value);
+        }
         this.form.reset();
     }
 
@@ -45,6 +47,4 @@ export class HeroesSearchComponent implements OnInit {
     getField(fieldName: string): AbstractControl {
         return this.form.get(fieldName);
     }
-
-
 }

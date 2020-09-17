@@ -29,4 +29,8 @@ export class ApiService {
     getHeroesBySearch(str: string): Observable<any> {
         return this.get(`search/${ str }`);
     }
+
+    getHeroById(id: number): Observable<any> {
+        return this.get(`${ id }`);
+    }
 }
