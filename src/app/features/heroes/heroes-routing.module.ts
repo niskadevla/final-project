@@ -8,13 +8,11 @@ import { SelectionPageComponent } from './components/selection-page/selection-pa
 const route: Routes = [
     { path: '', component: HeroesComponent, canActivate: [ AuthGuard ], children: [
             { path: routes.SELECTION_PAGE.routerPath, component: SelectionPageComponent }
-        ] }
+        ]}
 ];
-
 
 @NgModule({
     imports: [ RouterModule.forChild(route) ],
     exports: [RouterModule]
 })
-export class HeroesRoutingModule {
-}
+export class HeroesRoutingModule {}
