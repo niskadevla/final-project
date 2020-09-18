@@ -1,17 +1,60 @@
-.auth-page {
-  max-width: 800px;
-  margin: 1rem auto;
-  padding: 1rem;
-  border: 1px dotted gray;
-  border-radius: 5px;
+@import "src/styles/styles-variables";
 
-  &-title {
-    font-size: 1.8rem;
-  }
+a {
+    font-weight: bold;
+    color: $MAIN_COLOR;
+    text-decoration: none;
+
+    &:hover,
+    &:active {
+        color: lighten($MAIN_COLOR, $MAIN_AMOUNT);
+        cursor: pointer;
+    }
+}
+
+.auth-page {
+    max-width: 800px;
+    margin: 1rem auto;
+    padding: 1rem;
+    border: 1px dotted gray;
+    border-radius: 5px;
+
+    &-title {
+        font-size: 1.8rem;
+    }
 }
 
 .btn {
-  margin-right: 1rem;
+    margin-right: 1rem;
+
+    &-select {
+        align-self: center;
+    }
+
+    &-magnifier {
+        display: block;
+        position: absolute;
+        top: 2.2rem;
+        right: .5rem;
+        z-index: 99;
+        width: 2rem;
+        height: 2rem;
+        padding: 0;
+        margin: 0;
+        border: none;
+        outline: none;
+        background: url("./../src/assets/images/loupe.svg");
+
+        &:hover {
+            opacity: 0.7;
+        }
+
+        &:active,
+        &:focus {
+            border: none;
+            outline: none;
+        }
+    }
 }
 
 .has-error {
@@ -22,3 +65,45 @@
     background-position: right calc(0.375em + 0.1875rem) center;
     background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
+
+.selection-page {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.alphabet {
+    position: absolute;
+    left: -2.5rem;
+    top: 3.2rem;
+    z-index: 9;
+
+    &-inner a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2rem;
+        height: 2rem;
+        border: 3px solid $PURPLE;
+        border-radius: 50%;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
+.search,
+.heroes {
+    margin-top: $MARGIN_TOP_BLOCK;
+
+    &-item {
+        align-items: center;
+        padding: .5rem 2rem;
+    }
+
+    &-item img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+

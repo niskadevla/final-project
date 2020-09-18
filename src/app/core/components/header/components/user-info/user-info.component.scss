@@ -1,0 +1,20 @@
+.header-user {
+    align-items: center;
+
+    &-avatar {
+        width: 4rem;
+        height: 4rem;
+
+        & img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+    }
+
+    &-link {
+        padding: 1rem .5rem;
+    }
+}
+
