@@ -4,6 +4,7 @@ import { IHero } from '../../../../../../shared/models/hero.model';
 import { UserInfoService } from '../../../../../../shared/services/user-info.service';
 import { IUserInfo } from '../../../../../../shared/models/user-info';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-heroes-list',
@@ -17,7 +18,7 @@ export class HeroesListComponent implements OnInit, OnDestroy {
     heroes: IHero[];
 
     constructor(private apiService: ApiService,
-                public userInfoService: UserInfoService) {}
+                private userInfoService: UserInfoService) {}
 
     ngOnInit(): void {
         this.initData();
@@ -44,6 +45,7 @@ export class HeroesListComponent implements OnInit, OnDestroy {
 
         if (query) {
             this.apiService.getHeroesBySearch(query)
+                .pipe(take(1))
                 .subscribe((heroes) => {
                     this.heroes = heroes.results;
                 });

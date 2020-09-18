@@ -15,7 +15,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     subscription: Subscription = null;
     lastHero: IHero;
 
-    constructor(public userInfoService: UserInfoService) {}
+    constructor(private userInfoService: UserInfoService) {}
 
     ngOnInit(): void {
         this.initData();
