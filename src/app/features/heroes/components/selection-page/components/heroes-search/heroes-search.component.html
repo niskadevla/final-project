@@ -1,8 +1,8 @@
 <div class="search">
     <div class="search-form card">
         <div class="card-body">
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="mb-3">
+            <form [formGroup]="form">
+                <div class="search-control mb-3">
                     <label for="inputSearch" class="form-label">Find hero</label>
                     <input formControlName="search"
                            [class.has-error]="isSearchIncorrect()"
@@ -10,6 +10,7 @@
                            class="form-control"
                            id="inputSearch"
                            aria-describedby="searchHelp"/>
+                    <button class="btn-magnifier" type="submit" (click)="onSubmit()"></button>
                 </div>
 
                 <div *ngIf="isSearchIncorrect()"

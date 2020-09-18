@@ -17,14 +17,17 @@ export class HeroesSearchComponent implements OnInit {
     form: FormGroup;
 
     constructor(private fb: FormBuilder,
-                private userInfoService: UserInfoService) {
+                private userInfoService: UserInfoService) {}
+
+    ngOnInit(): void {
+        this.initData();
+        this.initForm();
+    }
+
+    initData(): void {
         this.subscription = this.userInfoService.userInfo$.subscribe(userInfo => {
             this.userInfo = userInfo;
         });
-    }
-
-    ngOnInit(): void {
-        this.initForm();
     }
 
     initForm(): void {

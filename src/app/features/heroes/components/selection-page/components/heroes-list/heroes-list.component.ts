@@ -17,15 +17,10 @@ export class HeroesListComponent implements OnInit, OnDestroy {
     heroes: IHero[];
 
     constructor(private apiService: ApiService,
-                public userInfoService: UserInfoService) {
-        this.subscription = this.userInfoService.userInfo$.subscribe(userInfo => {
-            this.userInfo = userInfo;
-            this.heroes = this.userInfo.selectedHeroes;
-            this.getHeroesBySearchQuery(this.userInfoService.getSearchQuery());
-        });
-    }
+                public userInfoService: UserInfoService) {}
 
     ngOnInit(): void {
+        this.initData();
         this.getHeroesBySearchQuery(this.userInfoService.getSearchQuery());
     }
 
@@ -34,6 +29,14 @@ export class HeroesListComponent implements OnInit, OnDestroy {
             this.subscription.unsubscribe();
             this.subscription = null;
         }
+    }
+
+    initData(): void {
+        this.subscription = this.userInfoService.userInfo$.subscribe(userInfo => {
+            this.userInfo = userInfo;
+            this.heroes = this.userInfo.selectedHeroes;
+            this.getHeroesBySearchQuery(this.userInfoService.getSearchQuery());
+        });
     }
 
     getHeroesBySearchQuery(query: string): void {

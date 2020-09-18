@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { IUserInfo, UserInfo } from '../models/user-info';
 import { Hero, IHero } from '../models/hero.model';
 import { ApiService } from './api.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserInfoService {
 
-    private userInfoSubject: BehaviorSubject<IUserInfo> = new BehaviorSubject(this.getUserInfo());
-    userInfo$: Observable<IUserInfo> = this.userInfoSubject.asObservable();
+    userInfo$: BehaviorSubject<IUserInfo> = new BehaviorSubject(this.getUserInfo());
 
     constructor(public apiService: ApiService ) {}
 
     setUserInfo(userInfo: IUserInfo): void {
-        this.userInfoSubject.next(userInfo);
+        this.userInfo$.next(userInfo);
     }
 
     updateUserInfo(userInfo: IUserInfo): void {
@@ -39,6 +39,7 @@ export class UserInfoService {
     createSelectedHeroById(id: number): void {
         if (!this.getSelectedHeroById(id)) {
             this.apiService.getHeroById(id)
+                .pipe(take(1))
                 .subscribe((hero: IHero) => {
                     const userInfo = this.getUserInfo();
                     userInfo.selectedHeroes.push(hero);
