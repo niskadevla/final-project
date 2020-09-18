@@ -17,5 +17,4 @@ import { HeroesListModule } from './components/heroes-list/heroes-list.module';
         SelectionPageComponent
     ]
 })
-export class SelectionPageModule {
-}
+export class SelectionPageModule {}

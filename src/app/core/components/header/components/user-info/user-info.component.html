@@ -1,6 +1,6 @@
 <div class="header-user row">
   <div class="header-user-info col-auto">
-      <a class="header-user-link" href="">User info</a>
+      <a class="header-user-link" [routerLink]="routes.USER_INFO_PAGE.fullPath">User info</a>
   </div>
   <div *ngIf="(lastHero | json) != '{}'" class="header-user-avatar col-auto">
       <a href="">
