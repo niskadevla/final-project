@@ -1,0 +1,48 @@
+@import "src/styles/styles-variables";
+
+.alphabet {
+    position: absolute;
+    left: -3.5rem;
+    top: 3.2rem;
+    z-index: 9;
+
+    &-inner {
+        position: relative;
+        width: auto;
+        height: $LETTER_SIZE + $LETTER_PADDING;
+        overflow: hidden;
+    }
+
+    &-inner.active {
+        position: relative;
+        width: auto;
+        height: auto;
+    }
+
+    &-link {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: $LETTER_SIZE;
+        height: $LETTER_SIZE;
+        margin-bottom: .3rem;
+        padding: $LETTER_PADDING;
+        font-size: $LETTER_SIZE;
+        border: 3px solid $PURPLE;
+        border-radius: 50%;
+        background-color: $WHITE;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover,
+        &:active,
+        &.active {
+            background-color: $PURPLE;
+            border-color: $BLACK;
+            color: $BLACK;
+        }
+    }
+}
+
+

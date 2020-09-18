@@ -1,5 +1,14 @@
 <div class="alphabet">
-    <div class="alphabet-inner">
-        <a>A</a>
+    <div (click)="onClick($event)"
+         [class.active]="isClicked"
+         class="alphabet-inner">
+        <a class="alphabet-link active">
+            {{ selectedLetter }}
+        </a>
+        <a *ngFor="let char of alphabet"
+           [attr.data-value]="char"
+           class="alphabet-link">
+            {{ char }}
+        </a>
     </div>
 </div>

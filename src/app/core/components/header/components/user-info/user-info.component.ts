@@ -28,7 +28,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
         }
     }
 
-    initData(): void {
+    private initData(): void {
         this.subscription = this.userInfoService.userInfo$.subscribe(userInfo => {
             this.userInfo = userInfo;
             const selectedHeroes = this.userInfo.selectedHeroes;
