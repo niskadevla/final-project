@@ -30,8 +30,10 @@ export class UserInfoComponent implements OnInit, OnDestroy {
 
     private initData(): void {
         this.subscription = this.userInfoService.userInfo$.subscribe(userInfo => {
+            let selectedHeroes: IHero[];
+
             this.userInfo = userInfo;
-            const selectedHeroes = this.userInfo.selectedHeroes;
+            selectedHeroes = this.userInfo.selectedHeroes;
             this.lastHero = selectedHeroes[selectedHeroes.length - 1];
         });
     }

@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { ApiService } from '../../../../../../shared/services/api.service';
 import { UserInfoService } from '../../../../../../shared/services/user-info.service';
 import { IUserInfo } from '../../../../../../shared/models/user-info';
-import { Subscription } from 'rxjs';
+import { ENGLISH_ALPHABET } from '../../../../../../shared/utils/constants';
 
 @Component({
-  selector: 'app-alphabet',
-  templateUrl: './alphabet.component.html',
-  styleUrls: ['./alphabet.component.scss']
+    selector: 'app-alphabet',
+    templateUrl: './alphabet.component.html',
+    styleUrls: [ './alphabet.component.scss' ]
 })
 export class AlphabetComponent implements OnInit, OnDestroy {
 
@@ -18,10 +20,11 @@ export class AlphabetComponent implements OnInit, OnDestroy {
     subscription: Subscription = null;
 
     constructor(private apiService: ApiService,
-                private userInfoService: UserInfoService) {}
+                private userInfoService: UserInfoService) {
+    }
 
     ngOnInit(): void {
-        this.alphabet = this.getAlphabet();
+        this.alphabet = ENGLISH_ALPHABET;
         this.initData();
     }
 
@@ -39,26 +42,20 @@ export class AlphabetComponent implements OnInit, OnDestroy {
         });
     }
 
-    getAlphabet(): string[] {
-        const arr = [];
-
-        for (let i = 65; i <= 90; i++) {
-            arr.push(String.fromCharCode(i));
-        }
-
-        return arr;
-    }
-
     onClick($event: MouseEvent): void {
         const target = $event.target as HTMLAnchorElement;
         const letter = target.dataset.value;
 
         if (letter) {
-            this.userInfoService.setUserInfoSelectedLetter(letter);
-            this.userInfoService.setUserInfoSearchQuery(letter);
-            this.selectedLetter = letter;
+            this.setSelectedLetter(letter);
         }
 
         this.isClicked = !this.isClicked;
+    }
+
+    setSelectedLetter(letter: string): void {
+        this.userInfoService.setUserInfoSelectedLetter(letter);
+        this.userInfoService.setUserInfoSearchQuery(letter);
+        this.selectedLetter = letter;
     }
 }
