@@ -41,7 +41,7 @@ export class UserInfoService {
             this.apiService.getHeroById(id)
                 .pipe(take(1))
                 .subscribe((hero: IHero) => {
-                    const userInfo = this.getUserInfo();
+                    const userInfo = this.deleteEmptyHero(this.getUserInfo());
                     userInfo.selectedHeroes.push(hero);
                     this.updateUserInfo(userInfo);
                     this.setUserInfoSelectedHero(id);
@@ -77,5 +77,11 @@ export class UserInfoService {
 
         userInfo.selectedHeroes = selectedHeroes;
         this.updateUserInfo(userInfo);
+    }
+
+    deleteEmptyHero(userInfo: IUserInfo): IUserInfo {
+        userInfo.selectedHeroes = userInfo.selectedHeroes.filter((hero: IHero) => hero.name);
+
+        return userInfo;
     }
 }
