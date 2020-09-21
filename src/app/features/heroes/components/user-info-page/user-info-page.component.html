@@ -1,1 +1,28 @@
-<p>user-info-page works!</p>
+<nav class="user-info-page-nav">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a [routerLink]="routes.USER_HEROES_LIST.routerPath"
+               routerLinkActive="active"
+               class="nav-link">
+                Heroes list
+            </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="routes.BATTLES_HISTORY.routerPath"
+               routerLinkActive="active"
+               class="nav-link">
+                History
+            </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="routes.POWERUPS.routerPath"
+               routerLinkActive="active"
+               class="nav-link">
+                Power ups
+            </a>
+        </li>
+    </ul>
+</nav>
+<section class="user-info-page-body">
+    <router-outlet></router-outlet>
+</section>

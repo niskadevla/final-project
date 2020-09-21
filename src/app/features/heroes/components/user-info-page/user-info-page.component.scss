@@ -1,0 +1,15 @@
+@import "src/styles/styles-variables";
+
+.user-info-page-nav {
+    margin-top: $MARGIN_TOP_BLOCK;
+}
+
+.nav {
+    justify-content: center;
+}
+
+.user-info-page-body {
+    margin-top: $MARGIN_TOP_BLOCK;
+    padding: 1rem;
+    border: 2px solid $BLACK
+}
