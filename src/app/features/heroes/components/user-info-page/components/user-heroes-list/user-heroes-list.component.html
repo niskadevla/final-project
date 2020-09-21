@@ -25,14 +25,14 @@
                             <div class="col-md card-buttons">
                                 <button (click)="selectHero(hero?.id)"
                                         [disabled]="isSelectedHero(hero?.id)"
-                                        [class]="{'btn': true,
-                                            'btn-success': !isSelectedHero(hero?.id),
+                                        [class]="{'btn-success': !isSelectedHero(hero?.id),
                                             'btn-secondary': isSelectedHero(hero?.id)
-                                        }">
+                                        }"
+                                        class="btn">
                                     select
                                 </button>
                                 <a [routerLink]="routes.HERO_INFO_PAGE.routerPath"
-                                        class="btn btn-success">
+                                   class="btn btn-success">
                                     View hero
                                 </a>
                             </div>
