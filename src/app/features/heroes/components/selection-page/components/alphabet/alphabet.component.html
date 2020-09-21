@@ -1,7 +1,7 @@
 <div class="alphabet">
-    <div [class.active]="isClicked"
-         class="alphabet-inner"
-         (click)="onClick($event)">
+    <div (click)="onClick($event)"
+         [class.active]="isClicked"
+         class="alphabet-inner">
         <a class="alphabet-link active">
             {{ selectedLetter }}
         </a>

@@ -77,14 +77,20 @@ a {
     margin-top: $MARGIN_TOP_BLOCK;
 
     &-item {
-        align-items: center;
+        justify-content: space-between;
         padding: .5rem 2rem;
     }
 
     &-item img {
-        width: 100%;
+        width: 10rem;
         height: auto;
     }
+}
+
+.card-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 
