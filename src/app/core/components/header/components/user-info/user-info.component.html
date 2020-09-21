@@ -2,7 +2,7 @@
   <div class="header-user-info col-auto">
       <a class="header-user-link" href="">User info</a>
   </div>
-  <div class="header-user-avatar col-auto">
+  <div *ngIf="lastHero?.image?.url" class="header-user-avatar col-auto">
       <a href="">
           <img [src]="lastHero?.image?.url"
                [alt]="lastHero?.name"
