@@ -42,6 +42,7 @@ export class UserInfoService {
                 .pipe(take(1))
                 .subscribe((hero: IHero) => {
                     const userInfo = this.getUserInfo();
+
                     userInfo.selectedHeroes.push(hero);
                     this.updateUserInfo(userInfo);
                 });
@@ -54,12 +55,14 @@ export class UserInfoService {
 
     setUserInfoSearchQuery(query: string): void {
         const userInfo = this.getUserInfo();
+
         userInfo.searchQuery = query;
         this.updateUserInfo(userInfo);
     }
 
     setUserInfoSelectedLetter(letter: string): void {
         const userInfo = this.getUserInfo();
+
         userInfo.selectedLetter = letter;
         this.updateUserInfo(userInfo);
     }
