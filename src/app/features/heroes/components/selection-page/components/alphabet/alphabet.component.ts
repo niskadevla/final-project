@@ -13,7 +13,7 @@ import { ENGLISH_ALPHABET } from '../../../../../../shared/utils/constants';
 })
 export class AlphabetComponent implements OnInit, OnDestroy {
 
-    alphabet: string[];
+    alphabet: string[] = ENGLISH_ALPHABET;
     isClicked = false;
     userInfo: IUserInfo;
     selectedLetter: string;
@@ -24,7 +24,6 @@ export class AlphabetComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.alphabet = ENGLISH_ALPHABET;
         this.initData();
     }
 
