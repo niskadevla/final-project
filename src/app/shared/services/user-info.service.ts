@@ -44,6 +44,7 @@ export class UserInfoService {
                     const userInfo = this.getUserInfo();
                     userInfo.selectedHeroes.push(hero);
                     this.updateUserInfo(userInfo);
+                    this.setUserInfoSelectedHero(id);
                 });
         }
     }
@@ -61,6 +62,20 @@ export class UserInfoService {
     setUserInfoSelectedLetter(letter: string): void {
         const userInfo = this.getUserInfo();
         userInfo.selectedLetter = letter;
+        this.updateUserInfo(userInfo);
+    }
+
+    setUserInfoSelectedHero(id: number): void {
+        const userInfo = this.getUserInfo();
+        let selectedHeroes: IHero[] = userInfo.selectedHeroes;
+
+        selectedHeroes = selectedHeroes.map(hero => {
+            hero.selected = hero.id === id;
+
+            return hero;
+        });
+
+        userInfo.selectedHeroes = selectedHeroes;
         this.updateUserInfo(userInfo);
     }
 }
