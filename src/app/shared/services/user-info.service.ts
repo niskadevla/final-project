@@ -55,6 +55,7 @@ export class UserInfoService {
 
     setUserInfoSearchQuery(query: string): void {
         const userInfo = this.getUserInfo();
+
         userInfo.searchQuery = query;
         this.updateUserInfo(userInfo);
     }
