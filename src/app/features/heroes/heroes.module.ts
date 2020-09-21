@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HeroesComponent } from './heroes.component';
 import { HeroesRoutingModule } from './heroes-routing.module';
 import { SelectionPageModule } from './components/selection-page/selection-page.module';
+import { UserInfoPageModule } from './components/user-info-page/user-info-page.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { SelectionPageModule } from './components/selection-page/selection-page.
   imports: [
     CommonModule,
     HeroesRoutingModule,
-    SelectionPageModule
+    SelectionPageModule,
+    UserInfoPageModule
   ],
     exports: [
         HeroesComponent

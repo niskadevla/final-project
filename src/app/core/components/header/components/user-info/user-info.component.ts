@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { UserInfoService } from '../../../../../shared/services/user-info.service';
 import { IHero } from '../../../../../shared/models/hero.model';
-import { Subscription } from 'rxjs';
 import { IUserInfo } from '../../../../../shared/models/user-info';
+import { routes } from '../../../../routes/app-routes';
+import { IAppRotes } from '../../../../routes/route.model';
 
 @Component({
   selector: 'app-user-info',
@@ -11,6 +14,7 @@ import { IUserInfo } from '../../../../../shared/models/user-info';
 })
 export class UserInfoComponent implements OnInit, OnDestroy {
 
+    routes: IAppRotes = routes;
     userInfo: IUserInfo;
     subscription: Subscription = null;
     lastHero: IHero;
