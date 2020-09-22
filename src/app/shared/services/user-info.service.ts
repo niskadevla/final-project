@@ -18,7 +18,7 @@ export class UserInfoService {
         this.userInfo$.next(userInfo);
     }
 
-    private updateUserInfo(userInfo: IUserInfo): void {
+    public updateUserInfo(userInfo: IUserInfo): void {
         window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
         this.setUserInfo(userInfo);
     }

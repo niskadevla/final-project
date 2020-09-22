@@ -1,1 +1,22 @@
-<p>battles-history works!</p>
+<div class="battles-history">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th *ngFor="let field of Object.keys(battleHistoryFields)"
+                scope="col"
+                (click)="sortInOrder(field)">
+                {{ battleHistoryFields[field] }}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let history of battlesHistory">
+            <td *ngFor="let field of Object.values(history)">
+                <span *ngIf="!Number.isFinite(field)">{{ field }}</span>
+                <span *ngIf="Number.isFinite(field)">{{ field | date : 'medium'}}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
