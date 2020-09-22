@@ -18,30 +18,31 @@ export class UserInfoService {
         this.userInfo$.next(userInfo);
     }
 
-    updateUserInfo(userInfo: IUserInfo): void {
+    private updateUserInfo(userInfo: IUserInfo): void {
         window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
         this.setUserInfo(userInfo);
     }
 
-    getUserInfo(): IUserInfo {
+    private getUserInfo(): IUserInfo {
         return JSON.parse(window.localStorage.getItem('userInfo'))
             || new UserInfo('', [new Hero()]);
     }
 
-    getSelectedHeroes(): IHero[] {
+    private getSelectedHeroes(): IHero[] {
         return this.getUserInfo().selectedHeroes;
     }
 
-    getSearchQuery(): string {
+    public getSearchQuery(): string {
         return this.getUserInfo().searchQuery;
     }
 
-    createSelectedHeroById(id: number): void {
+    public createSelectedHeroById(id: number): void {
         if (!this.getSelectedHeroById(id)) {
             this.apiService.getHeroById(id)
                 .pipe(take(1))
                 .subscribe((hero: IHero) => {
                     const userInfo = this.deleteEmptyHero(this.getUserInfo());
+
                     userInfo.selectedHeroes.push(hero);
                     this.updateUserInfo(userInfo);
                     this.setUserInfoSelectedHero(id);
@@ -49,24 +50,24 @@ export class UserInfoService {
         }
     }
 
-    getSelectedHeroById(id: number): IHero {
+    public getSelectedHeroById(id: number): IHero {
         return  this.getSelectedHeroes().find((user: IHero) => user.id === id );
     }
 
-    setUserInfoSearchQuery(query: string): void {
+    public setUserInfoSearchQuery(query: string): void {
         const userInfo = this.getUserInfo();
 
         userInfo.searchQuery = query;
         this.updateUserInfo(userInfo);
     }
 
-    setUserInfoSelectedLetter(letter: string): void {
+    public setUserInfoSelectedLetter(letter: string): void {
         const userInfo = this.getUserInfo();
         userInfo.selectedLetter = letter;
         this.updateUserInfo(userInfo);
     }
 
-    setUserInfoSelectedHero(id: number): void {
+    public setUserInfoSelectedHero(id: number): void {
         const userInfo = this.getUserInfo();
         let selectedHeroes: IHero[] = userInfo.selectedHeroes;
 
@@ -80,8 +81,8 @@ export class UserInfoService {
         this.updateUserInfo(userInfo);
     }
 
-    deleteEmptyHero(userInfo: IUserInfo): IUserInfo {
-        userInfo.selectedHeroes = userInfo.selectedHeroes.filter((hero: IHero) => hero.name);
+    private deleteEmptyHero(userInfo: IUserInfo): IUserInfo {
+        userInfo.selectedHeroes = userInfo.selectedHeroes.filter((hero: IHero) => hero.name );
 
         return userInfo;
     }
