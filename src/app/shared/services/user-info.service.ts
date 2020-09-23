@@ -14,8 +14,7 @@ export class UserInfoService {
 
     userInfo$: BehaviorSubject<IUserInfo> = new BehaviorSubject(this.getUserInfo());
 
-    constructor(public apiService: ApiService) {
-    }
+    constructor(public apiService: ApiService ) {}
 
     private setUserInfo(userInfo: IUserInfo): void {
         this.userInfo$.next(userInfo);
