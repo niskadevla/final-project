@@ -6,6 +6,8 @@ import { IUserInfo } from '../../../../../../shared/models/user-info';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { routes } from '../../../../../../core/routes/app-routes';
+import { queryParams } from '../../../../routes/hero-info.route';
+import { getQueryParams } from '../../../../../../shared/utils/getQueryParams';
 
 @Component({
     selector: 'app-heroes-list',
@@ -18,6 +20,8 @@ export class HeroesListComponent implements OnInit, OnDestroy {
     subscription: Subscription = null;
     heroes: IHero[];
     routes = routes;
+    getQueryParams = getQueryParams;
+    queryParams = queryParams;
 
     constructor(private apiService: ApiService,
                 private userInfoService: UserInfoService) {}

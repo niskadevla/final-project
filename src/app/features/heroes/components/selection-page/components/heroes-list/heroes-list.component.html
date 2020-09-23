@@ -10,7 +10,7 @@
                     <div class="heroes-item row">
                         <div class="col-md">
                             <a [routerLink]="routes.HERO_INFO_PAGE.fullPath"
-                               [queryParams]="{'name': hero.name}">
+                               [queryParams]="getQueryParams(queryParams.name, hero.name)">
                                 <img [src]="hero?.image?.url"
                                      [alt]="hero.name"
                                      width="100"

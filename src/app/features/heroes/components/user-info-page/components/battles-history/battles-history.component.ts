@@ -7,6 +7,8 @@ import { IBattleHistory } from '../../../../../../shared/models/battle-history.m
 import { battleHistoryFields, sortFn } from '../../../../../../shared/utils/constants';
 import { SortDirectionsEnum } from '../../../../../../shared/utils/enums';
 import { routes } from '../../../../../../core/routes/app-routes';
+import { queryParams } from '../../../../routes/hero-info.route';
+import { getQueryParams } from '../../../../../../shared/utils/getQueryParams';
 
 @Component({
     selector: 'app-battles-history',
@@ -19,10 +21,11 @@ export class BattlesHistoryComponent implements OnInit, OnDestroy {
     subscriptions: Subscription = new Subscription();
     battlesHistory: IBattleHistory[];
     battleHistoryFields: object = battleHistoryFields;
-    Number = Number;
     order = true;
     direction: SortDirectionsEnum;
     routes = routes;
+    getQueryParams = getQueryParams;
+    queryParams = queryParams;
 
     constructor(private userInfoService: UserInfoService) {
     }
@@ -52,5 +55,13 @@ export class BattlesHistoryComponent implements OnInit, OnDestroy {
                          : SortDirectionsEnum.DESC;
         this.order = !this.order;
         this.battlesHistory.sort(sortFn(sortName, this.direction));
+    }
+
+    isHeroName(key: string): boolean {
+        return (key === 'heroName' || key === 'opponentName');
+    }
+
+    isNumber(value: string | number): boolean {
+        return Number.isFinite(value);
     }
 }
