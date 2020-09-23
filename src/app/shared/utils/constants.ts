@@ -22,6 +22,14 @@ export const QUERY_PARAMS: {[key in QueryParamsMapKeysEnum]: Message} = {
 export const ENGLISH_ALPHABET: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                                             'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
+export const battleHistoryFields: object = {
+    date: 'Battle date',
+    heroName: 'Hero name',
+    opponentName: 'Opponent name',
+    battleResult: 'Battle result'
+};
+
+
 export const POWERUPS: IPowerup[] = [
     {
         title: 'Captain America shield',
