@@ -4,12 +4,13 @@ import { Subscription } from 'rxjs';
 import { UserInfoService } from '../../../../../../shared/services/user-info.service';
 import { IUserInfo } from '../../../../../../shared/models/user-info';
 import { IBattleHistory } from '../../../../../../shared/models/battle-history.model';
-import { battleHistoryFields } from '../../../../../../shared/utils/constants';
+import { battleHistoryFields, sortFn } from '../../../../../../shared/utils/constants';
+import { SortDirectionsEnum } from '../../../../../../shared/utils/enums';
 
 @Component({
-  selector: 'app-battles-history',
-  templateUrl: './battles-history.component.html',
-  styleUrls: ['./battles-history.component.scss']
+    selector: 'app-battles-history',
+    templateUrl: './battles-history.component.html',
+    styleUrls: [ './battles-history.component.scss' ]
 })
 export class BattlesHistoryComponent implements OnInit, OnDestroy {
 
@@ -19,9 +20,11 @@ export class BattlesHistoryComponent implements OnInit, OnDestroy {
     battleHistoryFields: object = battleHistoryFields;
     Object = Object;
     Number = Number;
-    order = 1;
+    order = true;
+    direction: SortDirectionsEnum;
 
-    constructor(private userInfoService: UserInfoService) {}
+    constructor(private userInfoService: UserInfoService) {
+    }
 
     ngOnInit(): void {
         this.initData();
@@ -38,12 +41,15 @@ export class BattlesHistoryComponent implements OnInit, OnDestroy {
         }));
     }
 
-    sortInOrder(key: string): void {
+    sortInOrder(sortName: string): void {
         if (!this.battlesHistory || !this.battlesHistory.length) {
             return;
         }
 
-        this.battlesHistory.sort((a: IBattleHistory, b: IBattleHistory) => a[key] > b[key] ? this.order : -this.order);
-        this.order = -this.order;
+        this.direction = this.order
+                         ? SortDirectionsEnum.ASCEND
+                         : SortDirectionsEnum.DESC;
+        this.order = !this.order;
+        this.battlesHistory.sort(sortFn(sortName, this.direction));
     }
 }

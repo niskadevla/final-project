@@ -1,1 +1,32 @@
-<p>powerups works!</p>
+<section class="powerups">
+
+        <ul class="heroes-list list-group list-group-flush">
+            <li *ngFor="let powerup of allPowerups" class="list-group-item">
+                    <div [class.disabled]="!powerup.usesLeft" class="card mb-3">
+                        <div class="heroes-item row">
+                            <div class="col-md">
+                                <img [src]="powerup.img"
+                                     [alt]="powerup.title"
+                                     width="100"
+                                     height="100">
+                            </div>
+                            <div class="col-md">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ powerup.title }}</h5>
+                                    <h6 class="card-text">Stats:</h6>
+                                    <ul>
+                                        <li *ngFor="let stat of powerup.powerstat | keyvalue">
+                                            {{ stat.key }} : {{ stat.value }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md d-flex justify-content-end">
+                                <h6 class="card-text">Uses left: <span>{{ powerup.usesLeft }}</span></h6>
+                            </div>
+                        </div>
+                    </div>
+            </li>
+        </ul>
+
+</section>
