@@ -23,8 +23,7 @@ export class BattlesHistoryComponent implements OnInit, OnDestroy {
     order = true;
     direction: SortDirectionsEnum;
 
-    constructor(private userInfoService: UserInfoService) {
-    }
+    constructor(private userInfoService: UserInfoService) {}
 
     ngOnInit(): void {
         this.initData();

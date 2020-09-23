@@ -24,10 +24,10 @@ export const ENGLISH_ALPHABET: string[] = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', '
                                             'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ];
 
 export const battleHistoryFields: object = {
-    date: 'Battle date',
     heroName: 'Hero name',
     opponentName: 'Opponent name',
-    battleResult: 'Battle result'
+    battleResult: 'Battle result',
+    date: 'Battle date',
 };
 
 export const POWERUPS: IPowerup[] = [
