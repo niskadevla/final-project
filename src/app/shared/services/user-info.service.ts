@@ -4,8 +4,7 @@ import { Hero, IHero } from '../models/hero.model';
 import { ApiService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { IPowerup, Powerup } from '../models/powerup.model';
-import { POWERUPS } from '../utils/constants';
+import { IPowerup } from '../models/powerup.model';
 
 @Injectable({
     providedIn: 'root'
@@ -103,6 +102,7 @@ export class UserInfoService {
 
         if (!userInfo.powerups?.length || !this.foundPowerup(powerup, userInfo.powerups)) {
             userInfo.powerups = userInfo.powerups || [];
+            powerup.usesLeft++;
             userInfo.powerups.push(powerup);
 
             return userInfo;
@@ -141,21 +141,5 @@ export class UserInfoService {
                    : this.decreaseUserInfoPowerup(powerup, userInfo);
 
         this.updateUserInfo(userInfo);
-    }
-
-    createPowerup(title: string): IPowerup {
-        return new Powerup(title, 1, this.getPowerupImg(title), this.getPowerupPowerstat(title));
-    }
-
-    private getPowerupImg(title: string): string {
-        const result = POWERUPS.find((powerup: IPowerup) => powerup.title === title);
-
-        return result.img;
-    }
-
-    private getPowerupPowerstat(title: string): object {
-        const result = POWERUPS.find((powerup: IPowerup) => powerup.title === title);
-
-        return result.powerstat;
     }
 }

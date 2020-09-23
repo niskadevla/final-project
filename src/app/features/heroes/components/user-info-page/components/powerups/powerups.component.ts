@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IUserInfo } from '../../../../../../shared/models/user-info';
 import { UserInfoService } from '../../../../../../shared/services/user-info.service';
 import { Subscription } from 'rxjs';
-import { IPowerup, Powerup } from '../../../../../../shared/models/powerup.model';
+import { IPowerup } from '../../../../../../shared/models/powerup.model';
 import { POWERUPS } from '../../../../../../shared/utils/constants';
 
 @Component({
@@ -15,11 +15,9 @@ export class PowerupsComponent implements OnInit, OnDestroy {
     userInfo: IUserInfo;
     subscriptions: Subscription = new Subscription();
     powerups: IPowerup[];
-    allPowerups: IPowerup[];
+    allPowerups: IPowerup[] = [];
 
-    constructor(private userInfoService: UserInfoService) {
-        this.userInfoService.updateUserInfoPowerups(new Powerup('Flash boots'), true);
-    }
+    constructor(private userInfoService: UserInfoService) {}
 
     ngOnInit(): void {
         this.initData();
@@ -39,22 +37,40 @@ export class PowerupsComponent implements OnInit, OnDestroy {
 
     createAllPowerups(): void {
         let restPowerups: IPowerup[] = POWERUPS;
+        let userPowerups: IPowerup[];
 
         if (!this.powerups) {
             this.allPowerups = restPowerups;
-            console.log('gg');
+
             return;
         }
 
-        this.powerups.forEach(powerup => {
-            restPowerups = restPowerups.map(p => p?.title === powerup.title
+        restPowerups = this.findDisabledPowerups();
+        userPowerups = this.createUserPowerups();
+
+        this.allPowerups = userPowerups.concat(restPowerups);
+    }
+
+    findDisabledPowerups(): IPowerup[] {
+        let restPowerups: IPowerup[] = POWERUPS;
+
+        this.powerups.forEach((powerup: IPowerup) => {
+            restPowerups = restPowerups.map((p: IPowerup) => p?.title === powerup.title
                                                  ? null
                                                  : p)
                                        .filter(p => p);
         });
 
-        this.allPowerups = this.powerups;
-        this.allPowerups.push(...restPowerups);
-        console.log(this.allPowerups);
+        return restPowerups;
+    }
+
+    createUserPowerups(): IPowerup[] {
+        const userPowerups: IPowerup[] = [];
+
+        this.powerups.forEach((powerup: IPowerup) => (
+            userPowerups.push({...POWERUPS.find(p => p?.title === powerup.title), usesLeft: powerup.usesLeft})
+        ));
+
+        return userPowerups;
     }
 }
