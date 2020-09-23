@@ -11,11 +11,12 @@ export interface IUserInfo {
 }
 
 export class UserInfo implements IUserInfo {
+
     constructor(
         public searchQuery: string,
         public selectedHeroes: IHero[],
         public selectedLetter: string = 'A',
         public battlesHistory?: IBattleHistory[],
         public powerups?: IPowerup[]
-    )
+    ) {}
 }

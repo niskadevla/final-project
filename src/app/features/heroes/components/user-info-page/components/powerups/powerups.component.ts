@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IUserInfo } from '../../../../../../shared/models/user-info';
 import { UserInfoService } from '../../../../../../shared/services/user-info.service';
 import { Subscription } from 'rxjs';
-import { IPowerup } from '../../../../../../shared/models/powerup.model';
+import { IPowerup, Powerup } from '../../../../../../shared/models/powerup.model';
 import { POWERUPS } from '../../../../../../shared/utils/constants';
 
 @Component({
@@ -18,6 +18,7 @@ export class PowerupsComponent implements OnInit, OnDestroy {
     allPowerups: IPowerup[];
 
     constructor(private userInfoService: UserInfoService) {
+        this.userInfoService.updateUserInfoPowerups(new Powerup('Flash boots'), true);
     }
 
     ngOnInit(): void {
@@ -39,12 +40,21 @@ export class PowerupsComponent implements OnInit, OnDestroy {
     createAllPowerups(): void {
         let restPowerups: IPowerup[] = POWERUPS;
 
+        if (!this.powerups) {
+            this.allPowerups = restPowerups;
+            console.log('gg');
+            return;
+        }
+
         this.powerups.forEach(powerup => {
-            restPowerups = restPowerups.map(p => p?.title === powerup.title ? null : p);
+            restPowerups = restPowerups.map(p => p?.title === powerup.title
+                                                 ? null
+                                                 : p)
+                                       .filter(p => p);
         });
 
-        restPowerups = restPowerups.filter(p => p);
         this.allPowerups = this.powerups;
         this.allPowerups.push(...restPowerups);
+        console.log(this.allPowerups);
     }
 }

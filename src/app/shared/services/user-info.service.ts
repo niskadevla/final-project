@@ -14,7 +14,8 @@ export class UserInfoService {
 
     userInfo$: BehaviorSubject<IUserInfo> = new BehaviorSubject(this.getUserInfo());
 
-    constructor(public apiService: ApiService ) {}
+    constructor(public apiService: ApiService) {
+    }
 
     private setUserInfo(userInfo: IUserInfo): void {
         this.userInfo$.next(userInfo);
@@ -27,7 +28,7 @@ export class UserInfoService {
 
     private getUserInfo(): IUserInfo {
         return JSON.parse(window.localStorage.getItem('userInfo'))
-            || new UserInfo('', [new Hero()]);
+            || new UserInfo('', [ new Hero() ]);
     }
 
     private getSelectedHeroes(): IHero[] {
@@ -53,7 +54,8 @@ export class UserInfoService {
     }
 
     public getSelectedHeroById(id: number): IHero {
-        return  this.getSelectedHeroes().find((user: IHero) => user.id === id );
+        return this.getSelectedHeroes()
+                   .find((user: IHero) => user.id === id);
     }
 
     public setUserInfoSearchQuery(query: string): void {
@@ -84,67 +86,49 @@ export class UserInfoService {
     }
 
     private deleteEmptyHero(userInfo: IUserInfo): IUserInfo {
-        userInfo.selectedHeroes = userInfo.selectedHeroes.filter((hero: IHero) => hero.name );
+        userInfo.selectedHeroes = userInfo.selectedHeroes.filter((hero: IHero) => hero.name);
 
         return userInfo;
     }
 
-    getUserInfoPowerups(): IPowerup[] | undefined {
-        return this.getUserInfo().powerups;
+    getUserInfoPowerups(): IPowerup[] {
+        return this.getUserInfo().powerups || [];
     }
 
-    foundPowerup(powerup: IPowerup, powerups: IPowerup[]): IPowerup | undefined {
+    foundPowerup(powerup: IPowerup, powerups: IPowerup[]): IPowerup {
         return powerups.find(obj => obj.title === powerup.title);
     }
 
     private increaseUserInfoPowerup(powerup: IPowerup, userInfo: IUserInfo): IUserInfo {
-        if (!userInfo.powerups?.length) {
-            userInfo.powerups = [];
+
+        if (!userInfo.powerups?.length || !this.foundPowerup(powerup, userInfo.powerups)) {
+            userInfo.powerups = userInfo.powerups || [];
             userInfo.powerups.push(powerup);
 
             return userInfo;
         }
 
-        const foundPowerup = this.foundPowerup(powerup, userInfo.powerups);
-
-        if (!foundPowerup) {
-            userInfo.powerups.push(powerup);
-
-            return userInfo;
-        }
-
-        userInfo.powerups =  userInfo.powerups.map((obj: IPowerup) => {
-            if (obj.title === powerup.title) {
-                obj.usesLeft++;
-            }
-
-            return obj;
-        });
+        userInfo.powerups = userInfo.powerups.map((obj: IPowerup) => ( {
+            ...obj, usesLeft: obj.title === powerup.title
+                              ? ++obj.usesLeft
+                              : obj.usesLeft
+        } ));
 
         return userInfo;
     }
 
     private decreaseUserInfoPowerup(powerup: IPowerup, userInfo: IUserInfo): IUserInfo {
 
-        if (!userInfo.powerups?.length) {
+        if (!userInfo.powerups?.length || !this.foundPowerup(powerup, userInfo.powerups)) {
             return userInfo;
         }
 
-        const foundPowerup = this.foundPowerup(powerup, userInfo.powerups);
-
-        if (!foundPowerup) {
-            return userInfo;
-        }
-
-        userInfo.powerups =  userInfo.powerups.map((obj: IPowerup) => {
-            if (obj.title === powerup.title) {
-                obj.usesLeft--;
-            }
-
-            return obj;
-        });
-
-        userInfo.powerups = userInfo.powerups.filter((obj: IPowerup) => obj.usesLeft > 0);
+        userInfo.powerups = userInfo.powerups.map((obj: IPowerup) => ( {
+            ...obj, usesLeft: obj.title === powerup.title
+                              ? --obj.usesLeft
+                              : obj.usesLeft
+        } ))
+                                    .filter((obj: IPowerup) => obj.usesLeft > 0);
 
         return userInfo;
     }
@@ -152,8 +136,9 @@ export class UserInfoService {
     updateUserInfoPowerups(powerup: IPowerup, win: boolean): void {
         let userInfo = this.getUserInfo();
 
-        userInfo = win ? this.increaseUserInfoPowerup(powerup, userInfo)
-                        : this.decreaseUserInfoPowerup(powerup, userInfo);
+        userInfo = win
+                   ? this.increaseUserInfoPowerup(powerup, userInfo)
+                   : this.decreaseUserInfoPowerup(powerup, userInfo);
 
         this.updateUserInfo(userInfo);
     }
