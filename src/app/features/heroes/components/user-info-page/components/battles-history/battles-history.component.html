@@ -2,18 +2,23 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th *ngFor="let field of Object.keys(battleHistoryFields)"
+            <th *ngFor="let field of battleHistoryFields | keyvalue"
                 scope="col"
-                (click)="sortInOrder(field)">
-                {{ battleHistoryFields[field] }}
+                (click)="sortInOrder(field.key)">
+                {{ field.value }}
             </th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let history of battlesHistory">
-            <td *ngFor="let field of Object.values(history)">
-                <span *ngIf="!Number.isFinite(field)">{{ field }}</span>
-                <span *ngIf="Number.isFinite(field)">{{ field | date : 'medium'}}</span>
+            <td *ngFor="let field of history | keyvalue">
+                <a *ngIf="(field.key === 'heroName' || field.key === 'opponentName') && !Number.isFinite(field.value)"
+                   [routerLink]="routes.HERO_INFO_PAGE.fullPath"
+                   [queryParams]="{'name': field.value}">
+                    {{ field.value }}
+                </a>
+                <span *ngIf="!(field.key === 'heroName' || field.key === 'opponentName') && !Number.isFinite(field.value)">{{ field.value }}</span>
+                <span *ngIf="Number.isFinite(field.value)">{{ field.value | date : 'medium'}}</span>
             </td>
         </tr>
         </tbody>

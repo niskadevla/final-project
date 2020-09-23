@@ -6,6 +6,7 @@ import { IUserInfo } from '../../../../../../shared/models/user-info';
 import { IBattleHistory } from '../../../../../../shared/models/battle-history.model';
 import { battleHistoryFields, sortFn } from '../../../../../../shared/utils/constants';
 import { SortDirectionsEnum } from '../../../../../../shared/utils/enums';
+import { routes } from '../../../../../../core/routes/app-routes';
 
 @Component({
     selector: 'app-battles-history',
@@ -18,10 +19,10 @@ export class BattlesHistoryComponent implements OnInit, OnDestroy {
     subscriptions: Subscription = new Subscription();
     battlesHistory: IBattleHistory[];
     battleHistoryFields: object = battleHistoryFields;
-    Object = Object;
     Number = Number;
     order = true;
     direction: SortDirectionsEnum;
+    routes = routes;
 
     constructor(private userInfoService: UserInfoService) {
     }
