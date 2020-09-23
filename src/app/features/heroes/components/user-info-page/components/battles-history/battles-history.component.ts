@@ -38,12 +38,12 @@ export class BattlesHistoryComponent implements OnInit, OnDestroy {
         }));
     }
 
-    sortInOrder(key): void {
+    sortInOrder(key: string): void {
         if (!this.battlesHistory || !this.battlesHistory.length) {
             return;
         }
 
-        this.battlesHistory.sort((a, b) => a[key] > b[key] ? this.order : -this.order);
+        this.battlesHistory.sort((a: IBattleHistory, b: IBattleHistory) => a[key] > b[key] ? this.order : -this.order);
         this.order = -this.order;
     }
 }
