@@ -1,5 +1,5 @@
 import { Message } from '../models/message.model';
-import { QueryParamsMapKeysEnum } from './enums';
+import { QueryParamsMapKeysEnum, SortDirectionsEnum } from './enums';
 import { IPowerup } from '../models/powerup.model';
 
 export const tokenLifeTime: number = 60 * 60 * 1000;
@@ -68,3 +68,15 @@ export const POWERUPS: IPowerup[] = [
         powerstat: { speed: '10' }
     }
 ];
+
+export const sortFn = (sortName: string, direction: SortDirectionsEnum) => (a, b) => {
+    const firstStr = a[sortName];
+    const secondStr = b[sortName];
+
+    if (direction === SortDirectionsEnum.ASCEND) {
+        return firstStr < secondStr ? 1 : -1;
+    }
+    if (direction === SortDirectionsEnum.DESC) {
+        return firstStr > secondStr ? 1 : -1;
+    }
+};
