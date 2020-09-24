@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BattlesHistoryComponent } from './battles-history.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -10,7 +11,8 @@ import { BattlesHistoryComponent } from './battles-history.component';
       BattlesHistoryComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
     exports: [
         BattlesHistoryComponent

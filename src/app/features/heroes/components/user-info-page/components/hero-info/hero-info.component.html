@@ -1,0 +1,20 @@
+<section class="hero-info row">
+    <div class="hero-info-avatar col-auto">
+        <img [src]="hero?.image?.url"
+             [alt]="hero?.name"
+             width="100"
+             height="100">
+    </div>
+    <div class="hero-info-body col">
+        <div class="card">
+            <ul *ngIf="hero?.name" class="list-group list-group-flush">
+                <li *ngFor="let data of hero | keyvalue" class="list-group-item">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ data.key }}</h5>
+                            <p class="card-text">{{ data.value | json }}</p>
+                        </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

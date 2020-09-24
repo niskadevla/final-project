@@ -5,6 +5,7 @@ import { ApiService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { IPowerup } from '../models/powerup.model';
+import { BattleHistory, IBattleHistory } from '../models/battle-history.model';
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +14,7 @@ export class UserInfoService {
 
     userInfo$: BehaviorSubject<IUserInfo> = new BehaviorSubject(this.getUserInfo());
 
-    constructor(public apiService: ApiService) {
-    }
+    constructor(public apiService: ApiService ) {}
 
     private setUserInfo(userInfo: IUserInfo): void {
         this.userInfo$.next(userInfo);
@@ -141,5 +141,22 @@ export class UserInfoService {
                    : this.decreaseUserInfoPowerup(powerup, userInfo);
 
         this.updateUserInfo(userInfo);
+    }
+
+    updateUserInfoBattleHistory(heroName: string, opponentName: string, battleResult: string): void {
+        const userInfo = this.getUserInfo();
+        const history: IBattleHistory = this.createUserInfoBattleHistory(heroName, opponentName, battleResult);
+
+        if (!userInfo.battlesHistory || !userInfo.battlesHistory.length) {
+            userInfo.battlesHistory = [history];
+        } else {
+            userInfo.battlesHistory.push(history);
+        }
+
+        this.updateUserInfo(userInfo);
+    }
+
+    private createUserInfoBattleHistory(heroName: string, opponentName: string, battleResult: string): IBattleHistory {
+        return new BattleHistory(heroName, opponentName, battleResult);
     }
 }

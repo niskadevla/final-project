@@ -7,6 +7,7 @@ import { UserInfoPageComponent } from './components/user-info-page/user-info-pag
 import { UserHeroesListComponent } from './components/user-info-page/components/user-heroes-list/user-heroes-list.component';
 import { BattlesHistoryComponent } from './components/user-info-page/components/battles-history/battles-history.component';
 import { PowerupsComponent } from './components/user-info-page/components/powerups/powerups.component';
+import { HeroInfoComponent } from './components/user-info-page/components/hero-info/hero-info.component';
 
 const route: Routes = [
     { path: '', redirectTo: routes.SELECTION_PAGE.routerPath, pathMatch: 'full' },
@@ -15,7 +16,8 @@ const route: Routes = [
             {path: '', redirectTo: routes.USER_HEROES_LIST.routerPath, pathMatch: 'full'},
             {path: routes.USER_HEROES_LIST.routerPath, component: UserHeroesListComponent},
             {path: routes.BATTLES_HISTORY.routerPath, component: BattlesHistoryComponent},
-            {path: routes.POWERUPS.routerPath, component: PowerupsComponent}
+            {path: routes.POWERUPS.routerPath, component: PowerupsComponent},
+            {path: routes.HERO_INFO_PAGE.routerPath, component: HeroInfoComponent},
         ]}
 ];
 

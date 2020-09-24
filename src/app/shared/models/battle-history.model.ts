@@ -1,14 +1,14 @@
 export interface IBattleHistory {
-    date: number;
     heroName: string;
     opponentName: string;
     battleResult: string;
+    date: number;
 }
 
 export class BattleHistory implements IBattleHistory {
 
-    constructor(public date: number =  Date.now(),
-                public heroName: string,
+    constructor(public heroName: string,
                 public opponentName: string,
-                public battleResult: string) {}
+                public battleResult: string,
+                public date: number =  Date.now()) {}
 }
