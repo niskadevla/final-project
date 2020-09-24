@@ -21,7 +21,6 @@
             </div>
         </div>
 
-
         <div class="middle-side col-4">
             <div class="d-flex flex-wrap align-items-center h-100 mb-3">
                 <div class="d-flex flex-column align-items-center w-100">
@@ -32,12 +31,13 @@
                         Start
                     </button>
                     <h5 class="mb-3">{{ opponentHero?.name }}</h5>
-                    <p class="card-text">Fight will be finished in: <b>{{ timeLeft }}</b> second</p>
+                    <p class="card-text">Fight will be finished in: <b>{{ timeForCountdown / 1000 }}</b> second</p>
+                    <app-loader *ngIf="isFightGoingOn"></app-loader>
                 </div>
 
                 <div class="d-flex justify-content-center w-100">
                     <select (change)="selectPowerup($event)">
-                        <option #defaultSelect [value]="" [defaultSelected]="defaultSelect" disabled>Select your powerup</option>
+                        <option disabled selected>Select your powerup</option>
                         <option *ngFor="let powerup of powerups" [value]="powerup.title">
                             {{ powerup.title }}, uses left: {{ powerup.usesLeft }}
                         </option>
@@ -45,7 +45,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="right-side col-4">
             <div class="card mb-3">
@@ -69,6 +68,8 @@
         </div>
     </div>
 
-    <app-modal-window [winLose]="isWon ? 'win' : 'lose'" [isFinished]="isFinished"></app-modal-window>
+    <app-modal-window [winLose]="isWon ? 'win' : 'lose'"
+                      [isFinished]="isFinished">
+    </app-modal-window>
 </section>
 

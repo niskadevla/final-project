@@ -1,19 +1,18 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-modal-window',
-  templateUrl: './modal-window.component.html',
-  styleUrls: ['./modal-window.component.scss']
+    selector: 'app-modal-window',
+    templateUrl: './modal-window.component.html',
+    styleUrls: [ './modal-window.component.scss' ]
 })
 export class ModalWindowComponent {
 
-    @Input() winLose;
-    @Input('isFinished') isOpened;
+    @Input() winLose: string;
+    @Input() isFinished: boolean;
 
-  closeWindow({ target }): void {
-      if (target.closest('button')) {
-          this.isOpened = false;
-      }
-  }
-
+    closeWindow({ target }: MouseEvent): void {
+        if (( target as HTMLElement ).closest('button')) {
+            this.isFinished = false;
+        }
+    }
 }

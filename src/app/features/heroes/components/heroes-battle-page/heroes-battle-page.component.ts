@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 
 import { IUserInfo } from '../../../../shared/models/user-info';
 import { IHero } from '../../../../shared/models/hero.model';
 import { UserInfoService } from '../../../../shared/services/user-info.service';
 import { ApiService } from '../../../../shared/services/api.service';
-import { take } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 import { randomInteger } from '../../../../shared/utils/randomInteger';
 import { DROP_CHANCE, MAX_HEROES_AMOUNT, POWERUPS, timeForCountdown } from '../../../../shared/utils/constants';
 import { IPowerup, Powerup } from '../../../../shared/models/powerup.model';
@@ -18,17 +18,16 @@ import { IPowerup, Powerup } from '../../../../shared/models/powerup.model';
 export class HeroesBattlePageComponent implements OnInit, OnDestroy {
 
     userInfo: IUserInfo;
-    subscription: Subscription = null;
+    subscriptions: Subscription = new Subscription();
     hero: IHero;
     opponentHero: IHero;
     powerups: IPowerup[];
     selectedPowerup: IPowerup;
     heroAfterUpgrade: IHero;
-    timeLeft = timeForCountdown;
     isWon = false;
     isFinished = false;
     isFightGoingOn = false;
-    arrayChances: boolean[];
+    timeForCountdown: number = timeForCountdown;
 
     constructor(private apiService: ApiService,
                 private userInfoService: UserInfoService) {
@@ -40,21 +39,16 @@ export class HeroesBattlePageComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.subscription !== null) {
-            this.subscription.unsubscribe();
-            this.subscription = null;
-        }
+        this.subscriptions.unsubscribe();
     }
 
     initData(): void {
-        this.subscription = this.userInfoService.userInfo$.subscribe(userInfo => {
+        this.subscriptions.add(this.userInfoService.userInfo$.subscribe(userInfo => {
             this.userInfo = userInfo;
             this.hero = this.getSelectedHero(this.userInfo.selectedHeroes);
             this.heroAfterUpgrade = this.cloneHero(this.hero);
             this.powerups = userInfo.powerups;
-        });
-
-        this.createArrayChances();
+        }));
     }
 
     cloneHero(obj: IHero): IHero {
@@ -62,9 +56,8 @@ export class HeroesBattlePageComponent implements OnInit, OnDestroy {
     }
 
     getOpponentHero(id: number): void {
-        this.apiService.getHeroById(id)
-            .pipe(take(1))
-            .subscribe((hero) => this.opponentHero = hero);
+        this.subscriptions.add(this.apiService.getHeroById(id)
+                                   .subscribe((hero) => this.opponentHero = hero));
     }
 
     getSelectedHero(heroes: IHero[]): IHero {
@@ -100,20 +93,16 @@ export class HeroesBattlePageComponent implements OnInit, OnDestroy {
     }
 
     countdown(): void {
-        const timeId = setInterval(() => {
-            --this.timeLeft;
-
-            if (this.timeLeft < 0) {
-                this.doAfterFight(timeId);
-            }
-        }, 1000);
+        this.subscriptions.add(of(true)
+            .pipe(delay(timeForCountdown))
+            .subscribe(() => this.doAfterFight()));
     }
 
     calcBattleResult(): void {
         let heroStatsSum = 0;
         let opponentHeroStatsSum = 0;
-        const myStats = this.heroAfterUpgrade.powerstats;
-        const oppositeStatsts = this.opponentHero.powerstats;
+        const myStats: { [key: string]: number | string } = this.heroAfterUpgrade.powerstats;
+        const oppositeStatsts: { [key: string]: number | string } = this.opponentHero.powerstats;
 
         for (const key in myStats) {
             if (myStats.hasOwnProperty(key)) {
@@ -136,9 +125,7 @@ export class HeroesBattlePageComponent implements OnInit, OnDestroy {
         this.isFightGoingOn = true;
     }
 
-    doAfterFight(timeId: number): void {
-        clearInterval(timeId);
-        this.timeLeft = timeForCountdown;
+    doAfterFight(): void {
         this.calcBattleResult();
         this.isFinished = true;
         this.isFightGoingOn = false;
@@ -153,14 +140,8 @@ export class HeroesBattlePageComponent implements OnInit, OnDestroy {
         this.getOpponentHero(randomInteger(1, MAX_HEROES_AMOUNT));
     }
 
-    createArrayChances(): void {
-        this.arrayChances = Array(100)
-            .fill(true, 0, DROP_CHANCE)
-            .fill(false, DROP_CHANCE);
-    }
-
     isDropedPowerup(): boolean {
-        return this.arrayChances[randomInteger(0, 99)];
+        return Math.random() < DROP_CHANCE;
     }
 
     getRandomPowerup(): string {
