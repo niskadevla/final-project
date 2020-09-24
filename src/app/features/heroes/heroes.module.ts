@@ -5,6 +5,7 @@ import { HeroesComponent } from './heroes.component';
 import { HeroesRoutingModule } from './heroes-routing.module';
 import { SelectionPageModule } from './components/selection-page/selection-page.module';
 import { UserInfoPageModule } from './components/user-info-page/user-info-page.module';
+import { HeroesBattlePageModule } from './components/heroes-battle-page/heroes-battle-page.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { UserInfoPageModule } from './components/user-info-page/user-info-page.m
     CommonModule,
     HeroesRoutingModule,
     SelectionPageModule,
-    UserInfoPageModule
+    UserInfoPageModule,
+    HeroesBattlePageModule
   ],
     exports: [
         HeroesComponent

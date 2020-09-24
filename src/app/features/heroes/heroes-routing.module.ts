@@ -8,6 +8,7 @@ import { UserHeroesListComponent } from './components/user-info-page/components/
 import { BattlesHistoryComponent } from './components/user-info-page/components/battles-history/battles-history.component';
 import { PowerupsComponent } from './components/user-info-page/components/powerups/powerups.component';
 import { HeroInfoComponent } from './components/user-info-page/components/hero-info/hero-info.component';
+import { HeroesBattlePageComponent } from './components/heroes-battle-page/heroes-battle-page.component';
 
 const route: Routes = [
     { path: '', redirectTo: routes.SELECTION_PAGE.routerPath, pathMatch: 'full' },
@@ -18,7 +19,8 @@ const route: Routes = [
             {path: routes.BATTLES_HISTORY.routerPath, component: BattlesHistoryComponent},
             {path: routes.POWERUPS.routerPath, component: PowerupsComponent},
             {path: routes.HERO_INFO_PAGE.routerPath, component: HeroInfoComponent},
-        ]}
+        ]},
+    { path: routes.HEROES_BATTLE_PAGE.routerPath, component: HeroesBattlePageComponent }
 ];
 
 @NgModule({

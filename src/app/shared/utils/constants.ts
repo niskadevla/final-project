@@ -80,3 +80,7 @@ export const sortFn = (sortName: string, direction: SortDirectionsEnum) => (a, b
         return firstStr > secondStr ? 1 : -1;
     }
 };
+
+export const MAX_HEROES_AMOUNT = 731;
+export const DROP_CHANCE = 0.2;
+export const timeForCountdown = 5000;

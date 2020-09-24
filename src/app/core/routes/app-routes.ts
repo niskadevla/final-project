@@ -9,6 +9,7 @@ export const routes: IAppRotes = {
     USER_HEROES_LIST: { routerPath: 'user-heroes-list', fullPath: 'heroes/user-info-page/user-heroes-list' },
     BATTLES_HISTORY: { routerPath: 'battles-history' },
     POWERUPS: { routerPath: 'powerups' },
-    HERO_INFO_PAGE: { routerPath: 'hero-info-page', fullPath: '/heroes/user-info-page/hero-info-page'}
+    HERO_INFO_PAGE: { routerPath: 'hero-info-page', fullPath: '/heroes/user-info-page/hero-info-page'},
+    HEROES_BATTLE_PAGE: { routerPath: 'heroes-battle-page', fullPath: '/heroes/heroes-battle-page' }
 };
 
