@@ -1,0 +1,74 @@
+<section class="heroes-battle-page mt-3">
+    <div class="row">
+        <div class="left-side col-4">
+            <div class="card mb-3">
+                <div class="heroes-item">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <img [src]="hero?.image?.url"
+                             [alt]="hero?.name"
+                             width="100"
+                             height="100"
+                             class="mb-3">
+                        <h5 class="card-title">{{ hero?.name }}</h5>
+                        <p class="card-text">Stats</p>
+                        <ul>
+                            <li *ngFor="let stat of heroAfterUpgrade?.powerstats | keyvalue">
+                                {{ stat.key }} : {{ stat.value }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="middle-side col-4">
+            <div class="d-flex flex-wrap align-items-center h-100 mb-3">
+                <div class="d-flex flex-column align-items-center w-100">
+                    <h5 class="mb-3">{{ hero?.name }}</h5>
+                    <button [disabled]="isFightGoingOn"
+                            class="btn btn-success mb-3"
+                            (click)="startBattle()">
+                        Start
+                    </button>
+                    <h5 class="mb-3">{{ opponentHero?.name }}</h5>
+                    <p class="card-text">Fight will be finished in: <b>{{ timeLeft }}</b> second</p>
+                </div>
+
+                <div class="d-flex justify-content-center w-100">
+                    <select (change)="selectPowerup($event)">
+                        <option #defaultSelect [value]="" [defaultSelected]="defaultSelect" disabled>Select your powerup</option>
+                        <option *ngFor="let powerup of powerups" [value]="powerup.title">
+                            {{ powerup.title }}, uses left: {{ powerup.usesLeft }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="right-side col-4">
+            <div class="card mb-3">
+                <div class="heroes-item">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <img [src]="opponentHero?.image?.url"
+                             [alt]="opponentHero?.name"
+                             width="100"
+                             height="100"
+                             class="mb-3">
+                        <h5 class="card-title">{{ opponentHero?.name }}</h5>
+                        <p class="card-text">Stats</p>
+                        <ul>
+                            <li *ngFor="let stat of opponentHero?.powerstats | keyvalue">
+                                {{ stat.key }} : {{ stat.value }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-modal-window [winLose]="isWon ? 'win' : 'lose'" [isFinished]="isFinished"></app-modal-window>
+</section>
+
