@@ -1,0 +1,16 @@
+<div class="header-user row">
+  <div class="header-user-info col-auto">
+      <a class="header-user-link" [routerLink]="routes.USER_INFO_PAGE.fullPath">User info</a>
+  </div>
+  <div *ngIf="lastHero?.image?.url" class="header-user-avatar col-auto">
+      <a [routerLink]="routes.HERO_INFO_PAGE.fullPath"
+      [queryParams]="{'name': lastHero.name}">
+          <img [src]="lastHero?.image?.url"
+               [alt]="lastHero?.name"
+               width="50"
+               height="50">
+      </a>
+  </div>
+</div>
+
+

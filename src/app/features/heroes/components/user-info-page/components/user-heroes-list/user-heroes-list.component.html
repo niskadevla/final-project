@@ -1,0 +1,48 @@
+<div class="heroes">
+    <div class="card">
+        <ul *ngIf="userInfo?.selectedHeroes" class="heroes-list list-group list-group-flush">
+            <li *ngFor="let hero of heroes" class="list-group-item">
+                <ng-container *ngIf="hero?.name">
+                    <div class="card mb-3">
+                        <div class="heroes-item row">
+                            <div class="col-md">
+                                <img [src]="hero?.image?.url"
+                                     [alt]="hero.name"
+                                     width="100"
+                                     height="100">
+                            </div>
+                            <div class="col-md">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ hero?.name }}</h5>
+                                    <p class="card-text">Stats</p>
+                                    <ul>
+                                        <li *ngFor="let stat of hero?.powerstats | keyvalue">
+                                            {{ stat.key }} : {{ stat.value }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md card-buttons">
+                                <button (click)="selectHero(hero?.id)"
+                                        [disabled]="isSelectedHero(hero?.id)"
+                                        [class]="{'btn-success': !isSelectedHero(hero?.id),
+                                            'btn-secondary': isSelectedHero(hero?.id)
+                                        }"
+                                        class="btn">
+                                    select
+                                </button>
+                                <a [routerLink]="routes.HERO_INFO_PAGE.fullPath"
+                                   [queryParams]="getQueryParams(queryParams.name, hero.name)"
+                                   class="btn btn-success">
+                                    View hero
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </li>
+        </ul>
+    </div>
+
+    <a class="btn btn-primary btn-add-hero" [routerLink]="routes.SELECTION_PAGE.fullPath">+</a>
+</div>

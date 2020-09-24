@@ -1,0 +1,19 @@
+@import "src/styles/styles-variables";
+.header {
+  padding: 1rem 0;
+  background-color: $PURPLE;
+
+  &-inner {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-logo {
+    background: transparent url("./../../../../assets/images/logo.png") no-repeat center;
+    background-size: contain;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+  }
+}
+

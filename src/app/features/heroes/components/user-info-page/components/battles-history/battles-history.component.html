@@ -1,0 +1,27 @@
+<div class="battles-history">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th *ngFor="let field of battleHistoryFields | keyvalue"
+                scope="col"
+                (click)="sortInOrder(field.key)">
+                {{ field.value }}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let history of battlesHistory">
+            <td *ngFor="let field of history | keyvalue">
+                <a *ngIf="isHeroName(field.key) && !isNumber(field.value)"
+                   [routerLink]="routes.HERO_INFO_PAGE.fullPath"
+                   [queryParams]="getQueryParams(queryParams.name, field.value)">
+                    {{ field.value }}
+                </a>
+                <span *ngIf="!isHeroName(field.key) && !isNumber(field.value)">{{ field.value }}</span>
+                <span *ngIf="isNumber(field.value)">{{ field.value | date : 'medium'}}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

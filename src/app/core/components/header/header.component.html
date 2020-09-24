@@ -1,0 +1,15 @@
+<header class="header">
+    <section class="container">
+        <div class="header-inner row">
+            <div class="header-logo col-auto">
+            </div>
+            <nav *ngIf="doYouHaveHeroes()"
+                 class="header-nav nav nav-pills col-auto">
+                <a [routerLink]="routes.HEROES_BATTLE_PAGE.fullPath" class="nav-link active">Fight!</a>
+            </nav>
+            <div class="header-info col-auto">
+                <app-user-info></app-user-info>
+            </div>
+        </div>
+    </section>
+</header>

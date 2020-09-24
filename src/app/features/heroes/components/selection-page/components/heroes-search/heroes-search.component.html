@@ -1,0 +1,29 @@
+<div class="search">
+    <div class="search-form card">
+        <div class="card-body">
+            <form [formGroup]="form">
+                <div class="search-control mb-3">
+                    <label for="inputSearch" class="form-label">Find hero</label>
+                    <input formControlName="search"
+                           [class.has-error]="isSearchIncorrect()"
+                           type="text"
+                           class="form-control"
+                           id="inputSearch"
+                           aria-describedby="searchHelp"/>
+                    <button class="btn-magnifier" type="submit" (click)="onSubmit()"></button>
+                </div>
+
+                <div *ngIf="isSearchIncorrect()"
+                     id="searchHelp"
+                     class="text-danger">
+                    <span *ngIf="isFieldHasError('search', 'required')">Enter only text</span>
+                    <span *ngIf="isFieldHasError('search', 'pattern')">Enter only text</span>
+                </div>
+
+                <div class="mb-3 text-primary">
+                    Recent search
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

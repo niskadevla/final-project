@@ -1,0 +1,15 @@
+@import "src/styles/styles-variables";
+
+.hero-info {
+    &-avatar {
+        width: 20vw;
+        height: 20vw;
+
+        & img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: 3px solid $MAIN_COLOR;
+        }
+    }
+}
